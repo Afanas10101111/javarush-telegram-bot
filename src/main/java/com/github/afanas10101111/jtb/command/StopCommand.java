@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RequiredArgsConstructor
 public class StopCommand implements Command {
-    private static final String MESSAGE = "До свидания! Все твои подписки деактивированы";
+    public static final String MESSAGE = "До свидания! Все твои подписки деактивированы";
 
     private final SendBotMessageService service;
 

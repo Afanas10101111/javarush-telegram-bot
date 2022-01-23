@@ -10,7 +10,7 @@ import static com.github.afanas10101111.jtb.command.CommandName.STOP;
 
 @RequiredArgsConstructor
 public class HelpCommand implements Command {
-    private static final String MESSAGE = String.format("<b>Доступные команды:</b>\n" +
+    public static final String MESSAGE = String.format("<b>Доступные команды:</b>\n" +
                     "%s - начать работу со мной\n" +
                     "%s - остановить работу со мной\n" +
                     "%s - получить помощь",

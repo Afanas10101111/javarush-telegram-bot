@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RequiredArgsConstructor
 public class StartCommand implements Command {
-    private static final String MESSAGE = "Привет! Я готов помочь тебе быть в курсе выхода всех интересующих тебя статей на Java Rush";
+    public static final String MESSAGE = "Привет! Я готов помочь тебе быть в курсе выхода всех интересующих тебя статей на Java Rush";
 
     private final SendBotMessageService service;
 
