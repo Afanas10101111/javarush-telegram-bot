@@ -1,5 +1,8 @@
 # Release Notes
 
+## 0.3.0-SNAPSHOT
+* [FEATURE] JTB-11: Prepare for deployment in docker
+
 ## 0.2.0-SNAPSHOT
 * [FEATURE] JTB-2: Implement command pattern for telegram bot
 
