@@ -7,4 +7,17 @@ services:
     environment:
       - BOT_NAME=${BOT_NAME}
       - BOT_TOKEN=${BOT_TOKEN}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     restart: always
+    depends_on:
+      - db
+  db:
+    image: postgres:14.2
+    restart: always
+    environment:
+      - POSTGRES_DB=jtb
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 5431:5432
