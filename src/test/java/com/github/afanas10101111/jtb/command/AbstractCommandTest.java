@@ -1,6 +1,7 @@
 package com.github.afanas10101111.jtb.command;
 
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
+import com.github.afanas10101111.jtb.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -9,7 +10,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 abstract class AbstractCommandTest {
     private static final Long CHAT_ID = 123456789L;
 
-    protected SendBotMessageService service = Mockito.mock(SendBotMessageService.class);
+    protected SendBotMessageService messageService = Mockito.mock(SendBotMessageService.class);
+    protected UserService userService = Mockito.mock(UserService.class);
 
     abstract String getCommandName();
 
@@ -26,6 +28,6 @@ abstract class AbstractCommandTest {
         update.setMessage(message);
 
         getCommand().execute(update);
-        Mockito.verify(service).sendMessage(CHAT_ID.toString(), getCommandMessage());
+        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), getCommandMessage());
     }
 }

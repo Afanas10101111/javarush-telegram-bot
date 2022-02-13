@@ -1,6 +1,7 @@
 package com.github.afanas10101111.jtb.command;
 
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
+import com.github.afanas10101111.jtb.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,7 +11,10 @@ import java.util.Arrays;
 class CommandContainerTest {
     private static final String UNKNOWN_COMMAND = "asdf";
 
-    private final CommandContainer container = new CommandContainer(Mockito.mock(SendBotMessageService.class));
+    private final CommandContainer container = new CommandContainer(
+            Mockito.mock(SendBotMessageService.class),
+            Mockito.mock(UserService.class)
+    );
 
     @Test
     void shouldGetAllTheExistingCommands() {

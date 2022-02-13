@@ -1,6 +1,7 @@
 package com.github.afanas10101111.jtb.command;
 
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
+import com.github.afanas10101111.jtb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -8,10 +9,17 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class StopCommand implements Command {
     public static final String MESSAGE = "До свидания! Все твои подписки деактивированы";
 
-    private final SendBotMessageService service;
+    private final SendBotMessageService messageService;
+    private final UserService userService;
 
     @Override
     public void execute(Update update) {
-        service.sendMessage(update.getMessage().getChatId().toString(), MESSAGE);
+        messageService.sendMessage(update.getMessage().getChatId().toString(), MESSAGE);
+        userService.findByChatId(update.getMessage().getChatId().toString()).ifPresent(
+                u -> {
+                    u.setActive(false);
+                    userService.save(u);
+                }
+        );
     }
 }

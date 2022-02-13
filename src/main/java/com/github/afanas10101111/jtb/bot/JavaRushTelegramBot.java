@@ -2,6 +2,7 @@ package com.github.afanas10101111.jtb.bot;
 
 import com.github.afanas10101111.jtb.command.CommandContainer;
 import com.github.afanas10101111.jtb.service.SendBotMessageServiceImpl;
+import com.github.afanas10101111.jtb.service.UserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -19,8 +20,8 @@ public class JavaRushTelegramBot extends TelegramLongPollingBot {
 
     private final CommandContainer commandContainer;
 
-    public JavaRushTelegramBot() {
-        commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+    public JavaRushTelegramBot(UserService userService) {
+        commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), userService);
     }
 
     @Override
