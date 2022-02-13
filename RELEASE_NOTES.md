@@ -1,5 +1,8 @@
 # Release Notes
 
+## 0.4.0-SNAPSHOT
+* [FEATURE] JTB-0: Add repository layer
+
 ## 0.3.0-SNAPSHOT
 * [FEATURE] JTB-11: Prepare for deployment in docker
 
