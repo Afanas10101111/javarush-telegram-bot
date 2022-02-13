@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Sql(scripts = "/sql/prepareForTest.sql", config = @SqlConfig(encoding = "UTF-8"))
 @Import(UserServiceImpl.class)
 class UserServiceImplTest {
-    public static final String NEW_CHAT_ID = "0987654321";
-    public static final String CHAT_ID_00 = "12345678900";
+    private static final String NEW_CHAT_ID = "0987654321";
+    private static final String CHAT_ID_00 = "12345678900";
 
     @Autowired
     private UserService service;
