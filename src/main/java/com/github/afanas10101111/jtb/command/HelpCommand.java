@@ -4,6 +4,7 @@ import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import static com.github.afanas10101111.jtb.command.CommandName.ADD_GROUP;
 import static com.github.afanas10101111.jtb.command.CommandName.HELP;
 import static com.github.afanas10101111.jtb.command.CommandName.START;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
@@ -15,8 +16,9 @@ public class HelpCommand implements Command {
                     "%s - начать работу со мной\n" +
                     "%s - остановить работу со мной\n" +
                     "%s - узнать количество активных пользователей\n" +
+                    "%s - подписаться на группу статей\n" +
                     "%s - получить помощь",
-            START.getName(), STOP.getName(), STAT.getName(), HELP.getName());
+            START.getName(), STOP.getName(), STAT.getName(), ADD_GROUP.getName(), HELP.getName());
 
     private final SendBotMessageService service;
 
