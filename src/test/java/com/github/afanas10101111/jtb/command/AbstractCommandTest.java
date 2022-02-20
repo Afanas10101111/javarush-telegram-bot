@@ -1,5 +1,7 @@
 package com.github.afanas10101111.jtb.command;
 
+import com.github.afanas10101111.jtb.client.GroupClient;
+import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import com.github.afanas10101111.jtb.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -8,10 +10,12 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 abstract class AbstractCommandTest {
-    private static final Long CHAT_ID = 123456789L;
+    protected static final Long CHAT_ID = 123456789L;
 
     protected SendBotMessageService messageService = Mockito.mock(SendBotMessageService.class);
     protected UserService userService = Mockito.mock(UserService.class);
+    protected GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
+    protected GroupClient client = Mockito.mock(GroupClient.class);
 
     abstract String getCommandName();
 
@@ -20,7 +24,7 @@ abstract class AbstractCommandTest {
     abstract Command getCommand();
 
     @Test
-    public void shouldProperlyExecuteCommand() {
+    void shouldProperlyExecuteCommand() {
         Update update = new Update();
         Message message = Mockito.mock(Message.class);
         Mockito.when(message.getChatId()).thenReturn(CHAT_ID);

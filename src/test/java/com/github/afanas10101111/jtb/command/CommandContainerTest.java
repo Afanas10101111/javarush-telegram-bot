@@ -1,5 +1,7 @@
 package com.github.afanas10101111.jtb.command;
 
+import com.github.afanas10101111.jtb.client.GroupClient;
+import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import com.github.afanas10101111.jtb.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +15,9 @@ class CommandContainerTest {
 
     private final CommandContainer container = new CommandContainer(
             Mockito.mock(SendBotMessageService.class),
-            Mockito.mock(UserService.class)
+            Mockito.mock(UserService.class),
+            Mockito.mock(GroupSubService.class),
+            Mockito.mock(GroupClient.class)
     );
 
     @Test

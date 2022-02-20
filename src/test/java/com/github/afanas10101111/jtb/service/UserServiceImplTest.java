@@ -3,22 +3,16 @@ package com.github.afanas10101111.jtb.service;
 import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 
+import static com.github.afanas10101111.jtb.service.UseDataBase.CHAT_ID_00;
+import static com.github.afanas10101111.jtb.service.UseDataBase.NEW_CHAT_ID;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("test")
-@DataJpaTest
-@Sql(scripts = "/sql/prepareForTest.sql", config = @SqlConfig(encoding = "UTF-8"))
+@UseDataBase
 @Import(UserServiceImpl.class)
 class UserServiceImplTest {
-    public static final String NEW_CHAT_ID = "0987654321";
-    public static final String CHAT_ID_00 = "12345678900";
 
     @Autowired
     private UserService service;

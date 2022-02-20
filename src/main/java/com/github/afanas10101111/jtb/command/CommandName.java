@@ -9,7 +9,9 @@ public enum CommandName {
     START("/start"),
     STOP("/stop"),
     HELP("/help"),
-    STAT("/stat");
+    STAT("/stat"),
+    SUBSCRIBE("/subscribe"),
+    VIEW_SUBSCRIPTIONS("/viewSubscriptions");
 
     private final String name;
 }
