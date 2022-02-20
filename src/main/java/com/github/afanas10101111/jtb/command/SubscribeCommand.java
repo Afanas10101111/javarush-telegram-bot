@@ -11,19 +11,19 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.stream.Collectors;
 
-import static com.github.afanas10101111.jtb.command.CommandName.ADD_GROUP;
+import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.LF;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 @RequiredArgsConstructor
-public class AddGroupCommand implements Command {
+public class SubscribeCommand implements Command {
     public static final String SUBSCRIBED_FORMAT = "Подписал на группу %s";
     public static final String GROUP_NOT_FOUND_FORMAT = "Нет группы с ID = %s";
-    public static final String GROUP_ID_TITLE_FORMAT = "%s - %s";
+    public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
     public static final String INFORMATION_FORMAT = "Чтобы подписаться на группу - передай еще и ID группы. " +
-            "Например: " + ADD_GROUP.getName() + " 16.\n" +
+            "Например: " + SUBSCRIBE.getName() + " 16.\n" +
             "Вот список всех групп - выбирай какую хочешь :)\n\n" +
             "Имя группы - ID группы\n\n" +
             "%s";
@@ -36,7 +36,7 @@ public class AddGroupCommand implements Command {
     public void execute(Update update) {
         String message = update.getMessage().getText();
         String chatId = update.getMessage().getChatId().toString();
-        if (message.equalsIgnoreCase(ADD_GROUP.getName())) {
+        if (message.equalsIgnoreCase(SUBSCRIBE.getName())) {
             sendGroupIdList(chatId);
             return;
         }
@@ -60,7 +60,7 @@ public class AddGroupCommand implements Command {
 
     private void sendGroupIdList(String chatId) {
         String groupIds = client.getGroupList(GroupRequestArgs.builder().build()).stream()
-                .map(group -> String.format(GROUP_ID_TITLE_FORMAT, group.getTitle(), group.getId()))
+                .map(group -> String.format(GROUP_TITLE_ID_FORMAT, group.getTitle(), group.getId()))
                 .collect(Collectors.joining(LF));
         messageService.sendMessage(chatId, String.format(INFORMATION_FORMAT, groupIds));
     }

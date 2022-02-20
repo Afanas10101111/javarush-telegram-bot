@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -25,5 +26,6 @@ public class User {
     private boolean active;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    @OrderBy("id")
     private Set<GroupSub> groupSubs;
 }

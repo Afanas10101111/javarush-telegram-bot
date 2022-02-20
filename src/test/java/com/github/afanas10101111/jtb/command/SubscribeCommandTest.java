@@ -7,36 +7,36 @@ import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static com.github.afanas10101111.jtb.command.CommandName.ADD_GROUP;
+import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static org.mockito.ArgumentMatchers.any;
 
-class AddGroupCommandTest extends AbstractCommandTest {
+class SubscribeCommandTest extends AbstractCommandTest {
 
     @Override
     String getCommandName() {
-        return ADD_GROUP.getName();
+        return SUBSCRIBE.getName();
     }
 
     @Override
     String getCommandMessage() {
-        return String.format(AddGroupCommand.INFORMATION_FORMAT, "");
+        return String.format(SubscribeCommand.INFORMATION_FORMAT, "");
     }
 
     @Override
     Command getCommand() {
-        return new AddGroupCommand(messageService, groupSubService, client);
+        return new SubscribeCommand(messageService, groupSubService, client);
     }
 
     @Test
     void shouldProperlyExecuteCommandWithAlphabeticalGroupId() {
         String groupId = "zero";
-        performCheck(groupId, AddGroupCommand.GROUP_NOT_FOUND_FORMAT, null);
+        performCheck(groupId, SubscribeCommand.GROUP_NOT_FOUND_FORMAT, null);
     }
 
     @Test
     void shouldProperlyExecuteCommandWithUnknownGroupId() {
         String groupId = "16";
-        performCheck(groupId, AddGroupCommand.GROUP_NOT_FOUND_FORMAT, null);
+        performCheck(groupId, SubscribeCommand.GROUP_NOT_FOUND_FORMAT, null);
     }
 
     @Test
@@ -47,7 +47,7 @@ class AddGroupCommandTest extends AbstractCommandTest {
         savedGroupSub.setTitle(groupId);
         Mockito.when(groupSubService.save(any(), any())).thenReturn(savedGroupSub);
 
-        performCheck(groupId, AddGroupCommand.SUBSCRIBED_FORMAT, Integer.parseInt(groupId));
+        performCheck(groupId, SubscribeCommand.SUBSCRIBED_FORMAT, Integer.parseInt(groupId));
     }
 
     private void performCheck(String groupId, String messageFormat, Integer groupIdFromClient) {
