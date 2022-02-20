@@ -5,6 +5,8 @@ import com.github.afanas10101111.jtb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
+
 @RequiredArgsConstructor
 public class StatCommand implements Command {
     public static final String MESSAGE = "Активных пользователей: %d";
@@ -15,7 +17,7 @@ public class StatCommand implements Command {
     @Override
     public void execute(Update update) {
         messageService.sendMessage(
-                update.getMessage().getChatId().toString(),
+                extractChatId(update),
                 String.format(MESSAGE, userService.retrieveAllActiveUsers().size())
         );
     }

@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import javax.ws.rs.NotFoundException;
 import java.util.stream.Collectors;
 
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 import static org.apache.commons.lang3.StringUtils.LF;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class ViewSubscriptionsCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        String chatId = update.getMessage().getChatId().toString();
+        String chatId = extractChatId(update);
         User user = userService.findByChatId(chatId)
                 .orElseThrow(NotFoundException::new);
         String activeSubs = user.getGroupSubs().stream()

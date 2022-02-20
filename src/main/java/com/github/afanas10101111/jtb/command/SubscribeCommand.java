@@ -12,6 +12,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.stream.Collectors;
 
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessage;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.LF;
 import static org.apache.commons.lang3.StringUtils.SPACE;
@@ -34,8 +36,8 @@ public class SubscribeCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        String message = update.getMessage().getText();
-        String chatId = update.getMessage().getChatId().toString();
+        String message = extractMessage(update);
+        String chatId = extractChatId(update);
         if (message.equalsIgnoreCase(SUBSCRIBE.getName())) {
             sendGroupIdList(chatId);
             return;

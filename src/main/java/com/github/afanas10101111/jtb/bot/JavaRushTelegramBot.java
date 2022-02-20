@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractCommandIdentifier;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.isMessageExists;
+
 @Slf4j
 @Setter
 @Component
@@ -28,9 +31,9 @@ public class JavaRushTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if(update.hasMessage() && update.getMessage().hasText()) {
+        if(isMessageExists(update)) {
             commandContainer
-                    .retrieveCommand(update.getMessage().getText().trim().split(" ")[0].toLowerCase())
+                    .retrieveCommand(extractCommandIdentifier(update))
                     .execute(update);
         }
     }

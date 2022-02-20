@@ -10,6 +10,7 @@ import static com.github.afanas10101111.jtb.command.CommandName.HELP;
 import static com.github.afanas10101111.jtb.command.CommandName.START;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
 import static com.github.afanas10101111.jtb.command.CommandName.STOP;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 
 @RequiredArgsConstructor
 public class HelpCommand implements Command {
@@ -40,6 +41,6 @@ public class HelpCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        service.sendMessage(update.getMessage().getChatId().toString(), MESSAGE);
+        service.sendMessage(extractChatId(update), MESSAGE);
     }
 }
