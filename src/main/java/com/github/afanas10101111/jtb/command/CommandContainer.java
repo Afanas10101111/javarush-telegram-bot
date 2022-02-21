@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
+import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.VIEW_SUBSCRIPTIONS;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.HELP;
@@ -33,6 +34,7 @@ public class CommandContainer {
                 .put(STAT.getName().toLowerCase(), new StatCommand(messageService, userService))
                 .put(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, groupSubService, client))
                 .put(VIEW_SUBSCRIPTIONS.getName().toLowerCase(), new ViewSubscriptionsCommand(messageService, userService))
+                .put(UNSUBSCRIBE.getName().toLowerCase(), new UnsubscribeCommand(messageService, userService, groupSubService))
                 .build();
     }
 
