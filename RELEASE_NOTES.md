@@ -1,5 +1,8 @@
 # Release Notes
 
+## 0.6.0-SNAPSHOT
+* [FEATURE] JTB-6: Add command to remove group subscription from my subscriptions
+
 ## 0.5.0-SNAPSHOT
 * [FEATURE] JTB-4: Add logic for adding the group to the subscription
 * [FEATURE] JTB-5: Add command to see list of my group subscriptions

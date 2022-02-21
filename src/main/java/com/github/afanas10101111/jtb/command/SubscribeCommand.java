@@ -11,12 +11,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.stream.Collectors;
 
-import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessage;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessageArgument;
+import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.LF;
-import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 @RequiredArgsConstructor
@@ -42,7 +42,7 @@ public class SubscribeCommand implements Command {
             sendGroupIdList(chatId);
             return;
         }
-        String groupId = message.split(SPACE)[1];
+        String groupId = extractMessageArgument(update, 1);
         if (isNumeric(groupId)) {
             GroupDiscussionInfo groupById = client.getGroupById(Integer.parseInt(groupId));
             if (isNull(groupById.getId())) {

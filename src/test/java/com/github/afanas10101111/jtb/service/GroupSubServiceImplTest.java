@@ -43,11 +43,18 @@ class GroupSubServiceImplTest {
         performCheck(groupId, groupTitle, 2, CHAT_ID_01);
     }
 
-    private GroupDiscussionInfo createGroupDiscussionInfo(int groupId, String groupTitle) {
-        GroupDiscussionInfo groupDiscussionInfo = new GroupDiscussionInfo();
-        groupDiscussionInfo.setId(groupId);
-        groupDiscussionInfo.setTitle(groupTitle);
-        return groupDiscussionInfo;
+    @Test
+    void saveGroup() {
+        int groupId = 1;
+        String groupTitle = "updated";
+
+        GroupSub groupSub = new GroupSub();
+        groupSub.setId(groupId);
+        groupSub.setTitle(groupTitle);
+        GroupSub saved = service.save(groupSub);
+
+        checkGroupSub(saved, groupId, groupTitle, 0, null);
+        checkGroupSub(service.findById(groupId).orElseThrow(), groupId, groupTitle, 0, null);
     }
 
     private void performCheck(int groupId, String groupTitle, int subscribersCount, String chatId) {
@@ -58,10 +65,19 @@ class GroupSubServiceImplTest {
         checkGroupSub(fromDB, groupId, groupTitle, subscribersCount, chatId);
     }
 
+    private GroupDiscussionInfo createGroupDiscussionInfo(int groupId, String groupTitle) {
+        GroupDiscussionInfo groupDiscussionInfo = new GroupDiscussionInfo();
+        groupDiscussionInfo.setId(groupId);
+        groupDiscussionInfo.setTitle(groupTitle);
+        return groupDiscussionInfo;
+    }
+
     private void checkGroupSub(GroupSub groupSub, int groupId, String groupTitle, int subscribersCount, String chatId) {
         assertEquals(groupId, groupSub.getId());
         assertEquals(groupTitle, groupSub.getTitle());
         assertEquals(subscribersCount, groupSub.getUsers().size());
-        assertTrue(groupSub.getUsers().contains(userRepository.getById(chatId)));
+        if (subscribersCount > 0) {
+            assertTrue(groupSub.getUsers().contains(userRepository.getById(chatId)));
+        }
     }
 }

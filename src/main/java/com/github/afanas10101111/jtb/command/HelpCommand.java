@@ -4,6 +4,7 @@ import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.VIEW_SUBSCRIPTIONS;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.HELP;
@@ -22,7 +23,8 @@ public class HelpCommand implements Command {
 
                     "Работа с подписками:\n" +
                     "%s - подписаться на группу статей\n" +
-                    "%s - посмотреть активные подписки\n\n" +
+                    "%s - посмотреть активные подписки\n" +
+                    "%s - отписаться от группы статей\n\n" +
 
                     "А еще можно:\n" +
                     "%s - узнать количество активных пользователей\n" +
@@ -33,6 +35,7 @@ public class HelpCommand implements Command {
 
             SUBSCRIBE.getName(),
             VIEW_SUBSCRIPTIONS.getName(),
+            UNSUBSCRIBE.getName(),
 
             STAT.getName(),
             HELP.getName());
