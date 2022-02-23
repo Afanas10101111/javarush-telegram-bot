@@ -1,5 +1,6 @@
 package com.github.afanas10101111.jtb.service;
 
+import com.github.afanas10101111.jtb.client.GroupClientImpl;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.repository.GroupSubRepository;
@@ -10,11 +11,12 @@ import org.springframework.context.annotation.Import;
 
 import static com.github.afanas10101111.jtb.service.UseDataBase.CHAT_ID_00;
 import static com.github.afanas10101111.jtb.service.UseDataBase.CHAT_ID_01;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @UseDataBase
-@Import({GroupSubServiceImpl.class, UserServiceImpl.class})
+@Import({GroupSubServiceImpl.class, UserServiceImpl.class, GroupClientImpl.class})
 class GroupSubServiceImplTest {
 
     @Autowired
@@ -55,6 +57,11 @@ class GroupSubServiceImplTest {
 
         checkGroupSub(saved, groupId, groupTitle, 0, null);
         checkGroupSub(service.findById(groupId).orElseThrow(), groupId, groupTitle, 0, null);
+    }
+
+    @Test
+    void findAll() {
+        assertThat(service.findAll()).asList().hasSize(1);
     }
 
     private void performCheck(int groupId, String groupTitle, int subscribersCount, String chatId) {

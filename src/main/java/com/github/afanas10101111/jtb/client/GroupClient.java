@@ -13,5 +13,7 @@ public interface GroupClient {
 
     Integer getGroupCount(GroupRequestArgs requestArgs);
 
-    GroupDiscussionInfo getGroupById(Integer id);
+    GroupDiscussionInfo getGroupById(int id);
+
+    Integer findLastPostId(int groupSubId);
 }

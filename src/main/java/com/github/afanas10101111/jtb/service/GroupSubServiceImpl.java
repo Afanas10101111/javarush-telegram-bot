@@ -1,5 +1,6 @@
 package com.github.afanas10101111.jtb.service;
 
+import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class GroupSubServiceImpl implements GroupSubService {
     private final GroupSubRepository repository;
     private final UserService userService;
+    private final GroupClient client;
 
     @Override
     public GroupSub save(String chatId, GroupDiscussionInfo groupDiscussionInfo) {
@@ -34,6 +37,7 @@ public class GroupSubServiceImpl implements GroupSubService {
             groupSub.addUser(user);
             groupSub.setId(groupDiscussionInfo.getId());
             groupSub.setTitle(groupDiscussionInfo.getTitle());
+            groupSub.setLastArticleId(client.findLastPostId(groupDiscussionInfo.getId()));
         }
         return repository.save(groupSub);
     }
@@ -46,5 +50,10 @@ public class GroupSubServiceImpl implements GroupSubService {
     @Override
     public Optional<GroupSub> findById(int id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public List<GroupSub> findAll() {
+        return repository.findAll();
     }
 }

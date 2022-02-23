@@ -55,7 +55,7 @@ class UnsubscribeCommandTest extends AbstractCommandTest {
 
         GroupSub groupSub = new GroupSub();
         groupSub.addUser(new User());
-        groupSub.setTitle("16");
+        groupSub.setTitle(groupId);
         Mockito.when(groupSubService.findById(anyInt())).thenReturn(Optional.of(groupSub));
 
         performCheck(groupId, UnsubscribeCommand.UNSUBSCRIBED_FORMAT);

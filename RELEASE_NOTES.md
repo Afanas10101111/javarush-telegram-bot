@@ -1,5 +1,10 @@
 # Release Notes
 
+## 0.7.0-SNAPSHOT
+* [FEATURE] JTB-3: Implement scheduler to get new articles
+* [FEATURE] JTB-7: Add command to stop using bot
+* [FEATURE] JTB-8: Add command to start or continue working with bot
+
 ## 0.6.0-SNAPSHOT
 * [FEATURE] JTB-6: Add command to remove group subscription from my subscriptions
 
