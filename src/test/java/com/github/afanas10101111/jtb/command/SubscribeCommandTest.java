@@ -9,6 +9,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 
 class SubscribeCommandTest extends AbstractCommandTest {
 
@@ -45,7 +47,7 @@ class SubscribeCommandTest extends AbstractCommandTest {
 
         GroupSub savedGroupSub = new GroupSub();
         savedGroupSub.setTitle(groupId);
-        Mockito.when(groupSubService.save(any(), any())).thenReturn(savedGroupSub);
+        Mockito.when(groupSubService.save(anyString(), any())).thenReturn(savedGroupSub);
 
         performCheck(groupId, SubscribeCommand.SUBSCRIBED_FORMAT, Integer.parseInt(groupId));
     }
@@ -58,7 +60,7 @@ class SubscribeCommandTest extends AbstractCommandTest {
 
         GroupDiscussionInfo groupById = new GroupDiscussionInfo();
         groupById.setId(groupIdFromClient);
-        Mockito.when(client.getGroupById(any())).thenReturn(groupById);
+        Mockito.when(client.getGroupById(anyInt())).thenReturn(groupById);
 
         update.setMessage(message);
         getCommand().execute(update);

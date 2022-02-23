@@ -27,7 +27,7 @@ public class GroupSub {
     private String title;
 
     @Column(name = "last_article_id")
-    private Integer lastArticleId;
+    private int lastArticleId;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
