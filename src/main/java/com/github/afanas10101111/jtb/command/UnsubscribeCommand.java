@@ -1,6 +1,5 @@
 package com.github.afanas10101111.jtb.command;
 
-import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import javax.ws.rs.NotFoundException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
@@ -45,15 +43,14 @@ public class UnsubscribeCommand implements Command {
         }
         String groupId = extractMessageArgument(update, 1);
         if (isNumeric(groupId)) {
-            Optional<GroupSub> groupSubOptional = groupSubService.findById(Integer.parseInt(groupId));
-            if (groupSubOptional.isPresent()) {
-                GroupSub groupSub = groupSubOptional.get();
-                groupSub.getUsers().remove(user);
-                groupSubService.save(groupSub);
-                messageService.sendMessage(chatId, String.format(UNSUBSCRIBED_FORMAT, groupSub.getTitle()));
-            } else {
-                sendGroupNotFound(chatId, groupId);
-            }
+            groupSubService.findById(Integer.parseInt(groupId)).ifPresentOrElse(
+                    g -> {
+                        g.getUsers().remove(user);
+                        groupSubService.save(g);
+                        messageService.sendMessage(chatId, String.format(UNSUBSCRIBED_FORMAT, g.getTitle()));
+                    },
+                    () -> sendGroupNotFound(chatId, groupId)
+            );
         } else {
             sendGroupNotFound(chatId, groupId);
         }
