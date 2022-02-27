@@ -16,15 +16,15 @@ public class NewArticleJob {
     private final NewArticleService service;
 
     @Scheduled(fixedRateString = "${bot.job_start_interval}")
-    public void findNewArticles() {
-        log.info("Find new article job started.");
+    public void findAndNotify() {
+        log.info("findAndNotify -> Started searching for new articles");
 
         LocalDateTime start = LocalDateTime.now();
         service.findAndNotify();
         LocalDateTime end = LocalDateTime.now();
 
         log.info(
-                "Find new articles job finished. Took seconds: {}",
+                "findAndNotify -> Search completed in {} seconds",
                 end.toEpochSecond(ZoneOffset.UTC) - start.toEpochSecond(ZoneOffset.UTC)
         );
     }

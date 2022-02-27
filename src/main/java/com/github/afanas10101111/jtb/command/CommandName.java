@@ -12,7 +12,8 @@ public enum CommandName {
     STAT("/stat"),
     SUBSCRIBE("/subscribe"),
     VIEW_SUBSCRIPTIONS("/viewSubscriptions"),
-    UNSUBSCRIBE("/unsubscribe");
+    UNSUBSCRIBE("/unsubscribe"),
+    ADMIN_HELP("/aHelp");
 
     private final String name;
 }

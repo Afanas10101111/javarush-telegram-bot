@@ -12,6 +12,10 @@ public class BotUpdateUtil {
         return update.getMessage().getChatId().toString();
     }
 
+    public static String extractUsername(Update update) {
+        return update.getMessage().getFrom().getUserName();
+    }
+
     public static String extractMessage(Update update) {
         return update.getMessage().getText();
     }
