@@ -10,5 +10,7 @@ public interface UserService {
 
     List<User> retrieveAllActiveUsers();
 
+    List<User> retrieveAllInactiveUsers();
+
     Optional<User> findByChatId(String chatId);
 }

@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> retrieveAllInactiveUsers() {
+        return repository.findAllByActiveFalse();
+    }
+
+    @Override
     public Optional<User> findByChatId(String chatId) {
         return repository.findById(chatId);
     }

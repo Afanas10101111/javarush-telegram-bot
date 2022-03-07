@@ -3,6 +3,7 @@ package com.github.afanas10101111.jtb.command;
 import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
+import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,6 +16,7 @@ abstract class AbstractCommandTest {
     protected SendBotMessageService messageService = Mockito.mock(SendBotMessageService.class);
     protected UserService userService = Mockito.mock(UserService.class);
     protected GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
+    protected StatisticService statisticService = Mockito.mock(StatisticService.class);
     protected GroupClient client = Mockito.mock(GroupClient.class);
 
     abstract String getCommandName();

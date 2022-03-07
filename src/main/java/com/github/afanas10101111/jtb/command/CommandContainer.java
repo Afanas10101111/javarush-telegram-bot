@@ -4,6 +4,7 @@ import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.command.annotation.AdminCommand;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
+import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
 import com.google.common.collect.ImmutableMap;
 
@@ -29,6 +30,7 @@ public class CommandContainer {
             SendBotMessageService messageService,
             UserService userService,
             GroupSubService groupSubService,
+            StatisticService statisticService,
             GroupClient client,
             Set<String> admins
     ) {
@@ -38,7 +40,7 @@ public class CommandContainer {
                 .put(START.getName().toLowerCase(), new StartCommand(messageService, userService))
                 .put(STOP.getName().toLowerCase(), new StopCommand(messageService, userService))
                 .put(HELP.getName().toLowerCase(), new HelpCommand(messageService))
-                .put(STAT.getName().toLowerCase(), new StatCommand(messageService, userService))
+                .put(STAT.getName().toLowerCase(), new StatCommand(messageService, statisticService))
                 .put(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, groupSubService, client))
                 .put(VIEW_SUBSCRIPTIONS.getName().toLowerCase(), new ViewSubscriptionsCommand(messageService, userService))
                 .put(UNSUBSCRIBE.getName().toLowerCase(), new UnsubscribeCommand(messageService, userService, groupSubService))

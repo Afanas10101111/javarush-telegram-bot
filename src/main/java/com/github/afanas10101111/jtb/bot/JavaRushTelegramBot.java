@@ -4,6 +4,7 @@ import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.command.CommandContainer;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageServiceImpl;
+import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,11 +33,14 @@ public class JavaRushTelegramBot extends TelegramLongPollingBot {
     public JavaRushTelegramBot(
             UserService userService,
             GroupSubService groupSubService,
+            StatisticService statisticService,
             GroupClient client,
             @Value("${bot.admins}") Set<String> admins
     ) {
         log.info("constructor -> admins: {}", admins);
-        commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), userService, groupSubService, client, admins);
+        commandContainer = new CommandContainer(
+                new SendBotMessageServiceImpl(this), userService, groupSubService, statisticService, client, admins
+        );
     }
 
     @Override

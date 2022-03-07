@@ -16,7 +16,10 @@ import java.util.stream.Collectors;
 @Service
 public class NewArticleServiceImpl implements NewArticleService {
     public static final String MESSAGE_FORMAT =
-            "✨Вышла новая статья <b>%s</b> в группе <b>%s</b>.✨\n\n" +
+            "✨Вышла новая статья\n" +
+                    "<b>%s</b>\n" +
+                    "в группе\n" +
+                    "<b>%s</b>.✨\n\n" +
                     "<b>Описание:</b> %s\n\n" +
                     "<b>Ссылка:</b> %s\n";
     public static final String WEB_POST_FORMAT = "https://javarush.ru/groups/posts/%s";
