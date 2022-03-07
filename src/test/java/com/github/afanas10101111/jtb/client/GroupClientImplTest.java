@@ -51,7 +51,7 @@ class GroupClientImplTest {
 
         client.expect(HttpMethod.GET,  URL + POSTS)
                 .queryString("groupKid", "16")
-                .thenReturn(Collections.emptyList());
+                .thenReturn(List.of());
 
         PostInfo post = new PostInfo();
         post.setId(1);

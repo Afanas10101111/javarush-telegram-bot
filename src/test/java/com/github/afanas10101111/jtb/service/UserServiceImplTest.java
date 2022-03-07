@@ -30,9 +30,11 @@ class UserServiceImplTest {
     @Test
     void retrieveAllActiveUsersAndUpdateUser() {
         assertEquals(5, service.retrieveAllActiveUsers().size());
+        assertEquals(3, service.retrieveAllInactiveUsers().size());
         User user = service.findByChatId(CHAT_ID_00).orElseThrow();
         user.setActive(false);
         service.save(user);
         assertEquals(4, service.retrieveAllActiveUsers().size());
+        assertEquals(4, service.retrieveAllInactiveUsers().size());
     }
 }

@@ -8,4 +8,4 @@ Required software:
 
 To deploy application, switch to needed branch and run bash script with credentials:
 
-$ start.sh ${bot_username} ${bot_token} ${db_username} ${db_password}
+$ start.sh ${bot_username} ${bot_token} ${bot_admins} ${db_username} ${db_password}

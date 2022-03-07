@@ -6,7 +6,8 @@ docker-compose stop
 
 export BOT_NAME=$1
 export BOT_TOKEN=$2
-export DB_USERNAME=$3
-export DB_PASSWORD=$4
+export BOT_ADMINS=$3
+export DB_USERNAME=$4
+export DB_PASSWORD=$5
 
 docker-compose up --build -d

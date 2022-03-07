@@ -4,14 +4,13 @@ import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
-import static com.github.afanas10101111.jtb.command.CommandName.VIEW_SUBSCRIPTIONS;
-import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 import static com.github.afanas10101111.jtb.command.CommandName.HELP;
 import static com.github.afanas10101111.jtb.command.CommandName.START;
-import static com.github.afanas10101111.jtb.command.CommandName.STAT;
 import static com.github.afanas10101111.jtb.command.CommandName.STOP;
-import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
+import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
+import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
+import static com.github.afanas10101111.jtb.command.CommandName.VIEW_SUBSCRIPTIONS;
 
 @RequiredArgsConstructor
 public class HelpCommand implements Command {
@@ -27,7 +26,6 @@ public class HelpCommand implements Command {
                     "%s - отписаться от группы статей\n\n" +
 
                     "А еще можно:\n" +
-                    "%s - узнать количество активных пользователей\n" +
                     "%s - получить помощь",
 
             START.getName(),
@@ -37,7 +35,6 @@ public class HelpCommand implements Command {
             VIEW_SUBSCRIPTIONS.getName(),
             UNSUBSCRIBE.getName(),
 
-            STAT.getName(),
             HELP.getName());
 
     private final SendBotMessageService service;

@@ -29,7 +29,7 @@ class PostClientImplTest {
 
         client.expect(HttpMethod.GET, URL + POSTS)
                 .queryString("groupKid", "16")
-                .thenReturn(Collections.emptyList());
+                .thenReturn(List.of());
     }
 
     @Test

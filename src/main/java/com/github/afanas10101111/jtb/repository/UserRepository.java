@@ -11,4 +11,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, String> {
     List<User> findAllByActiveTrue();
+
+    List<User> findAllByActiveFalse();
 }

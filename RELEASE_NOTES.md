@@ -1,9 +1,13 @@
 # Release Notes
 
+## 0.8.0-SNAPSHOT
+* [FEATURE] JTB-9: Enable statistic viewing for administrators
+
 ## 0.7.0-SNAPSHOT
 * [FEATURE] JTB-3: Implement scheduler to get new articles
 * [FEATURE] JTB-7: Add command to stop using bot
 * [FEATURE] JTB-8: Add command to start or continue working with bot
+* [FEATURE] JTB-10: Implement scheduling for sending notification about new articles
 
 ## 0.6.0-SNAPSHOT
 * [FEATURE] JTB-6: Add command to remove group subscription from my subscriptions
