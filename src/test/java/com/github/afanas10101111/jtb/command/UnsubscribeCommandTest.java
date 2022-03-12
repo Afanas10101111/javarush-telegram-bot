@@ -1,6 +1,5 @@
 package com.github.afanas10101111.jtb.command;
 
-import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
@@ -11,9 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.Collections;
 import java.util.Optional;
 
-import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 
