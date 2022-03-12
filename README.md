@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f1688104ba7b4688bccccb72a6d2f880)](https://www.codacy.com/gh/Afanas10101111/javarush-telegram-bot/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Afanas10101111/javarush-telegram-bot&amp;utm_campaign=Badge_Grade)
+
 JavaRush telegram bot
 ========
 This bot will help you not to miss new articles from the JavaRush community.

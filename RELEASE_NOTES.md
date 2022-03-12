@@ -1,4 +1,12 @@
-# Release Notes
+Release Notes
+========
+
+## 1.0.0
+MVP version is ready:
+* User can activate/inactivate bot
+* User can subscribe/unsubscribe on articles groups
+* User can view his list of subscriptions
+* Admin can view bot statistics
 
 ## 0.8.0-SNAPSHOT
 * [FEATURE] JTB-9: Enable statistic viewing for administrators
