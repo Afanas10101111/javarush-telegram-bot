@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.1.0
+* [FEATURE] JTB-13: Teach bot to say "Hi!"
+
 ## 1.0.0
 MVP version is ready:
 * User can activate/inactivate bot
