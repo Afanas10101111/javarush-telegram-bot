@@ -10,11 +10,12 @@ public enum CommandName {
     START("/start"),
     STOP("/stop"),
     HELP("/help"),
-    STAT("/stat"),
     SUBSCRIBE("/subscribe"),
     VIEW_SUBSCRIPTIONS("/viewSubscriptions"),
     UNSUBSCRIBE("/unsubscribe"),
-    ADMIN_HELP("/aHelp");
+    ADMIN_HELP("/aHelp"),
+    STAT("/stat"),
+    NOTIFY("/notify");
 
     private final String name;
 }

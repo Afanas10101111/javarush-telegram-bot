@@ -49,6 +49,8 @@ class CommandContainerTest {
         Assertions.assertEquals(UnknownCommand.class, stat.getClass());
         Command aHelp = container.retrieveCommand(CommandName.ADMIN_HELP.getName(), USER);
         Assertions.assertEquals(UnknownCommand.class, aHelp.getClass());
+        Command notify = container.retrieveCommand(CommandName.NOTIFY.getName(), USER);
+        Assertions.assertEquals(UnknownCommand.class, notify.getClass());
     }
 
     @Test

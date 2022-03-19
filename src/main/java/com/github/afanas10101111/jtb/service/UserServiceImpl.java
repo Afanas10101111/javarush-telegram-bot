@@ -19,12 +19,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> retrieveAllActiveUsers() {
+    public List<User> findAllActiveUsers() {
         return repository.findAllByActiveTrue();
     }
 
     @Override
-    public List<User> retrieveAllInactiveUsers() {
+    public List<User> findAllInactiveUsers() {
         return repository.findAllByActiveFalse();
     }
 

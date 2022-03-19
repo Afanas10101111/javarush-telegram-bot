@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface UserService {
     void save(User user);
 
-    List<User> retrieveAllActiveUsers();
+    List<User> findAllActiveUsers();
 
-    List<User> retrieveAllInactiveUsers();
+    List<User> findAllInactiveUsers();
 
     Optional<User> findByChatId(String chatId);
 }

@@ -23,8 +23,8 @@ public class StatisticServiceImpl implements StatisticService {
                 .filter(g -> !isEmpty(g.getUsers()))
                 .map(groupSub -> new GroupStatTo(groupSub.getId(), groupSub.getTitle(), groupSub.getUsers().size()))
                 .collect(Collectors.toList());
-        List<User> allInactiveUsers = userService.retrieveAllInactiveUsers();
-        List<User> allActiveUsers = userService.retrieveAllActiveUsers();
+        List<User> allInactiveUsers = userService.findAllInactiveUsers();
+        List<User> allActiveUsers = userService.findAllActiveUsers();
         double groupsPerUser = getGroupsPerUser(allActiveUsers);
         return new StatisticTo(allActiveUsers.size(), allInactiveUsers.size(), groupStatTos, groupsPerUser);
     }
