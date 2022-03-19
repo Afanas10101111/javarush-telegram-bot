@@ -7,8 +7,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 
 @RequiredArgsConstructor
-public class UnknownCommand implements Command {
-    public static final String MESSAGE = "Ничего не понял \uD83D\uDE14\nВведи /help чтобы ознакомиться со списком команд";
+public class GreetingCommand implements Command {
+    public static final String MESSAGE = "И тебе привет \uD83D\uDC4B\n" +
+            "У меня все под контролем! Как только выйдет интересующая тебя статья, ты сразу узнаешь об этом \uD83D\uDE09";
 
     private final SendBotMessageService service;
 

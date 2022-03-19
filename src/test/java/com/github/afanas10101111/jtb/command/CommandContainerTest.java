@@ -16,6 +16,7 @@ class CommandContainerTest {
     private static final String UNKNOWN_COMMAND = "needMoreGold";
     private static final String ADMIN = "admin";
     private static final String USER = "user";
+    private static final String GREETING = "HellO";
 
     private final CommandContainer container = new CommandContainer(
             Mockito.mock(SendBotMessageService.class),
@@ -23,7 +24,8 @@ class CommandContainerTest {
             Mockito.mock(GroupSubService.class),
             Mockito.mock(StatisticService.class),
             Mockito.mock(GroupClient.class),
-            Set.of(ADMIN)
+            Set.of(ADMIN),
+            Set.of(GREETING.toLowerCase())
     );
 
     @Test
@@ -47,5 +49,11 @@ class CommandContainerTest {
         Assertions.assertEquals(UnknownCommand.class, stat.getClass());
         Command aHelp = container.retrieveCommand(CommandName.ADMIN_HELP.getName(), USER);
         Assertions.assertEquals(UnknownCommand.class, aHelp.getClass());
+    }
+
+    @Test
+    void shouldReturnGreetingCommandOnGreetingRequest() {
+        Command greeting = container.retrieveCommand(GREETING, USER);
+        Assertions.assertEquals(GreetingCommand.class, greeting.getClass());
     }
 }

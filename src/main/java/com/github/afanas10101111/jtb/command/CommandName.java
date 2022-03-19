@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CommandName {
+    GREETING("/greeting"),
     START("/start"),
     STOP("/stop"),
     HELP("/help"),

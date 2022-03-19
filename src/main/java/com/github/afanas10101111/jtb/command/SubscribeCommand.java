@@ -24,9 +24,9 @@ public class SubscribeCommand implements Command {
     public static final String SUBSCRIBED_FORMAT = "Подписал на группу %s";
     public static final String GROUP_NOT_FOUND_FORMAT = "Нет группы с ID = %s";
     public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
-    public static final String INFORMATION_FORMAT = "Чтобы подписаться на группу - передай еще и ID группы. " +
+    public static final String INFORMATION_FORMAT = "Чтобы подписаться на группу - передай ID группы. " +
             "Например: " + SUBSCRIBE.getName() + " 16.\n" +
-            "Вот список всех групп - выбирай какую хочешь :)\n\n" +
+            "Вот список всех групп - выбирай \uD83D\uDE43\n\n" +
             "Имя группы - ID группы\n\n" +
             "%s";
 
@@ -36,9 +36,8 @@ public class SubscribeCommand implements Command {
 
     @Override
     public void execute(Update update) {
-        String message = extractMessage(update);
         String chatId = extractChatId(update);
-        if (message.equalsIgnoreCase(SUBSCRIBE.getName())) {
+        if (extractMessage(update).equalsIgnoreCase(SUBSCRIBE.getName())) {
             sendGroupIdList(chatId);
             return;
         }

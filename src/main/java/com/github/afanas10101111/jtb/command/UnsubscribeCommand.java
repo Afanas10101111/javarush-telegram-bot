@@ -22,7 +22,7 @@ public class UnsubscribeCommand implements Command {
     public static final String UNSUBSCRIBED_FORMAT = "Отписал от группы %s";
     public static final String GROUP_NOT_FOUND_FORMAT = "Среди твоих подписок нет группы с ID = %s";
     public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
-    public static final String INFORMATION_FORMAT = "Передай еще и ID группы, от которой хочешь отписаться. " +
+    public static final String INFORMATION_FORMAT = "Передай ID группы, от которой хочешь отписаться. " +
             "Например: " + UNSUBSCRIBE.getName() + " 16.\n" +
             "Вот список твоих подписок:\n\n" +
             "Имя группы - ID группы\n\n" +
