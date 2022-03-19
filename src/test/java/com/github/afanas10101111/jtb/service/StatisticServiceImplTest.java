@@ -28,8 +28,8 @@ class StatisticServiceImplTest {
         groupSub.setUsers(Set.of(user));
 
         Mockito.when(groupSubService.findAll()).thenReturn(List.of(groupSub));
-        Mockito.when(userService.retrieveAllActiveUsers()).thenReturn(List.of(user));
-        Mockito.when(userService.retrieveAllInactiveUsers()).thenReturn(List.of(new User()));
+        Mockito.when(userService.findAllActiveUsers()).thenReturn(List.of(user));
+        Mockito.when(userService.findAllInactiveUsers()).thenReturn(List.of(new User()));
 
         StatisticTo statisticTo = statisticService.calculateBotStatistic();
         assertNotNull(statisticTo);

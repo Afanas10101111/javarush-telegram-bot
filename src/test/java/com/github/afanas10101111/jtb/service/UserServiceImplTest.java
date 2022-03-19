@@ -23,18 +23,18 @@ class UserServiceImplTest {
         user.setChatId(NEW_CHAT_ID);
         user.setActive(true);
         service.save(user);
-        assertEquals(6, service.retrieveAllActiveUsers().size());
+        assertEquals(6, service.findAllActiveUsers().size());
         assertDoesNotThrow(() -> service.findByChatId(NEW_CHAT_ID).orElseThrow());
     }
 
     @Test
     void retrieveAllActiveUsersAndUpdateUser() {
-        assertEquals(5, service.retrieveAllActiveUsers().size());
-        assertEquals(3, service.retrieveAllInactiveUsers().size());
+        assertEquals(5, service.findAllActiveUsers().size());
+        assertEquals(3, service.findAllInactiveUsers().size());
         User user = service.findByChatId(CHAT_ID_00).orElseThrow();
         user.setActive(false);
         service.save(user);
-        assertEquals(4, service.retrieveAllActiveUsers().size());
-        assertEquals(4, service.retrieveAllInactiveUsers().size());
+        assertEquals(4, service.findAllActiveUsers().size());
+        assertEquals(4, service.findAllInactiveUsers().size());
     }
 }
