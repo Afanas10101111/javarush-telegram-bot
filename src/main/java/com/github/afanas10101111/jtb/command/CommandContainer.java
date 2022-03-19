@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.github.afanas10101111.jtb.command.CommandName.ADMIN_HELP;
+import static com.github.afanas10101111.jtb.command.CommandName.GREETING;
 import static com.github.afanas10101111.jtb.command.CommandName.HELP;
 import static com.github.afanas10101111.jtb.command.CommandName.START;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
@@ -25,6 +26,7 @@ public class CommandContainer {
     private final Map<String, Command> commands;
     private final Command unknown;
     private final Set<String> admins;
+    private final Set<String> knownGreetings;
 
     public CommandContainer(
             SendBotMessageService messageService,
@@ -32,11 +34,14 @@ public class CommandContainer {
             GroupSubService groupSubService,
             StatisticService statisticService,
             GroupClient client,
-            Set<String> admins
+            Set<String> admins,
+            Set<String> knownGreetings
     ) {
         this.admins = admins;
+        this.knownGreetings = knownGreetings;
         unknown = new UnknownCommand(messageService);
         commands = ImmutableMap.<String, Command>builder()
+                .put(GREETING.getName().toLowerCase(), new GreetingCommand(messageService))
                 .put(START.getName().toLowerCase(), new StartCommand(messageService, userService))
                 .put(STOP.getName().toLowerCase(), new StopCommand(messageService, userService))
                 .put(HELP.getName().toLowerCase(), new HelpCommand(messageService))
@@ -49,7 +54,11 @@ public class CommandContainer {
     }
 
     public Command retrieveCommand(String commandIdentifier, String username) {
-        Command command = commands.getOrDefault(commandIdentifier.toLowerCase(), unknown);
+        String lowerCaseCommandIdentifier = commandIdentifier.toLowerCase();
+        if (isGreeting(lowerCaseCommandIdentifier)) {
+            return commands.get(GREETING.getName().toLowerCase());
+        }
+        Command command = commands.getOrDefault(lowerCaseCommandIdentifier, unknown);
         if (isAdminCommand(command)) {
             return isAdminUser(username) ? command : unknown;
         }
@@ -62,5 +71,14 @@ public class CommandContainer {
 
     private boolean isAdminUser(String username) {
         return admins.contains(username);
+    }
+
+    private boolean isGreeting(String commandIdentifier) {
+        for (String greeting : knownGreetings) {
+            if (commandIdentifier.startsWith(greeting)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

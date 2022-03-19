@@ -26,7 +26,8 @@ public class HelpCommand implements Command {
                     "%s - отписаться от группы статей\n\n" +
 
                     "А еще можно:\n" +
-                    "%s - получить помощь",
+                    "%s - получить помощь\n" +
+                    "и поздороваться \uD83D\uDE42 попробуй \uD83D\uDC4B",
 
             START.getName(),
             STOP.getName(),
