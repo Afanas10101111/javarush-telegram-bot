@@ -3,7 +3,6 @@ package com.github.afanas10101111.jtb.command;
 import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 import static com.github.afanas10101111.jtb.command.CommandName.NOTIFY;
 
 class NotifyUsersCommandTest extends AbstractCommandTest {
+    private static final String MESSAGE_FOR_USERS = "The Bot is going crazy";
 
     @Override
     String getCommandName() {
@@ -33,13 +33,10 @@ class NotifyUsersCommandTest extends AbstractCommandTest {
         user.setChatId(CHAT_ID.toString());
         Mockito.when(userService.findAllActiveUsers()).thenReturn(List.of(user));
 
-        Update update = new Update();
-        Message message = Mockito.mock(Message.class);
-        String messageForUsers = "The Bot is going crazy";
-        Mockito.when(message.getText()).thenReturn(getCommandName() + " " + messageForUsers);
-        update.setMessage(message);
+        Update update = getMockedUpdate();
+        Mockito.when(update.getMessage().getText()).thenReturn(getCommandName() + " " + MESSAGE_FOR_USERS);
 
         getCommand().execute(update);
-        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), messageForUsers);
+        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), MESSAGE_FOR_USERS);
     }
 }

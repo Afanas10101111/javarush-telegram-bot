@@ -4,7 +4,6 @@ import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Collections;
@@ -59,12 +58,9 @@ class UnsubscribeCommandTest extends AbstractCommandTest {
     }
 
     private void performCheck(String groupId, String messageFormat) {
-        Update update = new Update();
-        Message message = Mockito.mock(Message.class);
-        Mockito.when(message.getChatId()).thenReturn(CHAT_ID);
-        Mockito.when(message.getText()).thenReturn(getCommandName() + " " + groupId);
+        Update update = getMockedUpdate();
+        Mockito.when(update.getMessage().getText()).thenReturn(getCommandName() + " " + groupId);
 
-        update.setMessage(message);
         getCommand().execute(update);
         Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), String.format(messageFormat, groupId));
     }

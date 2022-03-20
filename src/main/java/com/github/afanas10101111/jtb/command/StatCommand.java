@@ -5,12 +5,15 @@ import com.github.afanas10101111.jtb.dto.StatisticTo;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import com.github.afanas10101111.jtb.service.StatisticService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.stream.Collectors;
 
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractUsername;
 
+@Slf4j
 @RequiredArgsConstructor
 @AdminCommand
 public class StatCommand implements Command {
@@ -27,11 +30,13 @@ public class StatCommand implements Command {
 
     @Override
     public void execute(Update update) {
+        String chatId = extractChatId(update);
+        log.info("execute -> {}(Id = {}) requested statistics", extractUsername(update), chatId);
         StatisticTo statisticTo = statisticService.calculateBotStatistic();
         String collectedGroups = statisticTo.getGroupStatTos().stream()
                 .map(g -> String.format(GROUP_FORMAT, g.getTitle(), g.getId(), g.getActiveUserCount()))
                 .collect(Collectors.joining("\n"));
-        messageService.sendMessage(extractChatId(update), String.format(
+        messageService.sendMessage(chatId, String.format(
                 MESSAGE,
                 statisticTo.getActiveUserCount(),
                 statisticTo.getInactiveUserCount(),
