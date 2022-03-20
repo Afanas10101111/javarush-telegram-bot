@@ -1,10 +1,11 @@
 package com.github.afanas10101111.jtb.command;
 
 class UnknownCommandTest extends AbstractCommandTest {
+    private static final String UNKNOWN_COMMAND_NAME = "/needMoreGold";
 
     @Override
     String getCommandName() {
-        return "/asdf";
+        return UNKNOWN_COMMAND_NAME;
     }
 
     @Override

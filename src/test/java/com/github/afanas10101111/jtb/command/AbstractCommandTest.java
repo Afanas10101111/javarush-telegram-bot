@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 abstract class AbstractCommandTest {
+    protected static final String TELEGRAM_USER_NAME = "DarthVader";
     protected static final Long CHAT_ID = 123456789L;
 
     protected SendBotMessageService messageService = Mockito.mock(SendBotMessageService.class);
@@ -27,13 +28,19 @@ abstract class AbstractCommandTest {
 
     @Test
     void shouldProperlyExecuteCommand() {
+        getCommand().execute(getMockedUpdate());
+        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), getCommandMessage());
+    }
+
+    protected Update getMockedUpdate() {
         Update update = new Update();
         Message message = Mockito.mock(Message.class);
+        org.telegram.telegrambots.meta.api.objects.User telegramUser = new org.telegram.telegrambots.meta.api.objects.User();
+        telegramUser.setUserName(TELEGRAM_USER_NAME);
         Mockito.when(message.getChatId()).thenReturn(CHAT_ID);
         Mockito.when(message.getText()).thenReturn(getCommandName());
+        Mockito.when(message.getFrom()).thenReturn(telegramUser);
         update.setMessage(message);
-
-        getCommand().execute(update);
-        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), getCommandMessage());
+        return update;
     }
 }
