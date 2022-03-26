@@ -53,13 +53,13 @@ class SubscribeCommandTest extends AbstractCommandTest {
 
     private void performCheck(String groupId, String messageFormat, Integer groupIdFromClient) {
         Update update = getMockedUpdate();
-        Mockito.when(update.getMessage().getText()).thenReturn(getCommandName() + " " + groupId);
+        update.getMessage().setText(getCommandName() + " " + groupId);
 
         GroupDiscussionInfo groupById = new GroupDiscussionInfo();
         groupById.setId(groupIdFromClient);
         Mockito.when(client.getGroupById(anyInt())).thenReturn(groupById);
 
         getCommand().execute(update);
-        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), String.format(messageFormat, groupId));
+        verifyMessageServiceCall(CHAT_ID.toString(), String.format(messageFormat, groupId));
     }
 }

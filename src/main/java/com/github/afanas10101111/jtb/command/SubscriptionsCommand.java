@@ -13,7 +13,7 @@ import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId
 import static org.apache.commons.lang3.StringUtils.LF;
 
 @RequiredArgsConstructor
-public class ViewSubscriptionsCommand implements Command {
+public class SubscriptionsCommand implements Command {
     public static final String MESSAGE = "Активные подписки на группы:\n\nИмя группы - ID группы\n\n";
     public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
 

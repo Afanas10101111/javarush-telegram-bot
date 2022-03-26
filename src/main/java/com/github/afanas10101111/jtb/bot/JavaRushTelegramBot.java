@@ -19,7 +19,7 @@ import java.util.Set;
 
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractCommandIdentifier;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractUsername;
-import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.isMessageExists;
+import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.isMessageOrCallbackQueryExists;
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -51,7 +51,7 @@ public class JavaRushTelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (isMessageExists(update)) {
+        if (isMessageOrCallbackQueryExists(update)) {
             commandContainer.retrieveCommand(extractCommandIdentifier(update), extractUsername(update)).execute(update);
         }
     }

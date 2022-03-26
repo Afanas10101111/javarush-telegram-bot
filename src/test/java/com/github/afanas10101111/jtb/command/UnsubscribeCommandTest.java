@@ -59,9 +59,9 @@ class UnsubscribeCommandTest extends AbstractCommandTest {
 
     private void performCheck(String groupId, String messageFormat) {
         Update update = getMockedUpdate();
-        Mockito.when(update.getMessage().getText()).thenReturn(getCommandName() + " " + groupId);
+        update.getMessage().setText(getCommandName() + " " + groupId);
 
         getCommand().execute(update);
-        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), String.format(messageFormat, groupId));
+        verifyMessageServiceCall(CHAT_ID.toString(), String.format(messageFormat, groupId));
     }
 }

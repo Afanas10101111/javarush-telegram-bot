@@ -34,9 +34,9 @@ class NotifyUsersCommandTest extends AbstractCommandTest {
         Mockito.when(userService.findAllActiveUsers()).thenReturn(List.of(user));
 
         Update update = getMockedUpdate();
-        Mockito.when(update.getMessage().getText()).thenReturn(getCommandName() + " " + MESSAGE_FOR_USERS);
+        update.getMessage().setText(getCommandName() + " " + MESSAGE_FOR_USERS);
 
         getCommand().execute(update);
-        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), MESSAGE_FOR_USERS);
+        verifyMessageServiceCall(CHAT_ID.toString(), MESSAGE_FOR_USERS);
     }
 }
