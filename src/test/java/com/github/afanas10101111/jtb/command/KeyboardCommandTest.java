@@ -1,10 +1,11 @@
 package com.github.afanas10101111.jtb.command;
 
 import com.github.afanas10101111.jtb.command.util.KeyboardUtil;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import static com.github.afanas10101111.jtb.command.CommandName.KEYBOARD;
 
-class KeyboardCommandTest extends AbstractCommandTest {
+class KeyboardCommandTest extends AbstractCommandWithKeyboardTest {
 
     @Override
     String getCommandName() {
@@ -22,14 +23,7 @@ class KeyboardCommandTest extends AbstractCommandTest {
     }
 
     @Override
-    void shouldProperlyExecuteCommand() {
-        getCommand().execute(getMockedUpdate());
-        verifyMessageServiceCallWithKeyboard(CHAT_ID.toString(), getCommandMessage(), KeyboardUtil.getMenuKeyboard());
-    }
-
-    @Override
-    void shouldProperlyExecuteCommandFromCallback() {
-        getCommand().execute(getMockedUpdateWithCallback());
-        verifyMessageServiceCallWithKeyboard(CHAT_ID.toString(), getCommandMessage(), KeyboardUtil.getMenuKeyboard());
+    InlineKeyboardMarkup getKeyboard() {
+        return KeyboardUtil.getMenuKeyboard();
     }
 }

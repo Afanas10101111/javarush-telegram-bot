@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,9 +17,12 @@ import static com.github.afanas10101111.jtb.command.CommandName.STOP;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIPTIONS;
 import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
+import static org.apache.commons.lang3.StringUtils.SPACE;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class KeyboardUtil {
+    public static final int MAX_NUMERIC_ROW_SIZE = 5;
+
     private static InlineKeyboardMarkup menuKeyboard;
 
     public static InlineKeyboardMarkup getMenuKeyboard() {
@@ -26,6 +30,10 @@ public class KeyboardUtil {
             initializeMenuKeyboard();
         }
         return menuKeyboard;
+    }
+
+    public static InlineKeyboardMarkup getNumericKeyboard(String dataPrefix, List<Integer> numbers) {
+        return new InlineKeyboardMarkup(getRowListForNumbers(dataPrefix, numbers));
     }
 
     private static void initializeMenuKeyboard() {
@@ -46,10 +54,25 @@ public class KeyboardUtil {
         );
         List<List<InlineKeyboardButton>> rowList = Arrays.asList(firstRow, secondRow, thirdRow, fourthRow);
 
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        inlineKeyboardMarkup.setKeyboard(rowList);
+        menuKeyboard = new InlineKeyboardMarkup(rowList);
+    }
 
-        menuKeyboard = inlineKeyboardMarkup;
+    private static List<List<InlineKeyboardButton>> getRowListForNumbers(String dataPrefix, List<Integer> numbers) {
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        List<InlineKeyboardButton> row = new ArrayList<>();
+        for (Integer number : numbers) {
+            if (isRowFilled(row)) {
+                rowList.add(List.copyOf(row));
+                row = new ArrayList<>();
+            }
+            row.add(createButton(number.toString(), dataPrefix + SPACE + number));
+        }
+        rowList.add(row);
+        return rowList;
+    }
+
+    private static boolean isRowFilled(List<InlineKeyboardButton> row) {
+        return row.size() >= MAX_NUMERIC_ROW_SIZE;
     }
 
     private static InlineKeyboardButton createButton(String text, String data) {

@@ -9,6 +9,7 @@ import java.util.List;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
 
 class StatCommandTest extends AbstractCommandTest {
+    private static final String TITLE = "Title";
 
     @Override
     String getCommandName() {
@@ -22,7 +23,7 @@ class StatCommandTest extends AbstractCommandTest {
                 1,
                 2,
                 1.0,
-                String.format(StatCommand.GROUP_FORMAT, "Title", 3, 4)
+                String.format(StatCommand.GROUP_FORMAT, TITLE, 3, 4)
         );
     }
 
@@ -31,7 +32,7 @@ class StatCommandTest extends AbstractCommandTest {
         Mockito.when(statisticService.calculateBotStatistic()).thenReturn(new StatisticTo(
                 1,
                 2,
-                List.of(new GroupStatTo(3, "Title", 4)),
+                List.of(new GroupStatTo(3, TITLE, 4)),
                 1.0
         ));
         return new StatCommand(messageService, statisticService);
