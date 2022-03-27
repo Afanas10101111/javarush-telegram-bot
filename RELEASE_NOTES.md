@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.3.0
+* [FEATURE] JTB-16: Implement keyboard
+
 ## 1.2.0
 * [FEATURE] JTB-14: Add admin command to notify users
 

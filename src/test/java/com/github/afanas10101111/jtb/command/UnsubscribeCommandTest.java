@@ -31,7 +31,7 @@ class UnsubscribeCommandTest extends AbstractCommandWithKeyboardTest {
     @Override
     String getCommandMessage() {
         return String.format(
-                UnsubscribeCommand.INFORMATION_FORMAT,
+                UnsubscribeCommand.UNSUBSCRIBE_INFORMATION_FORMAT,
                 String.format(SubscribeCommand.GROUP_TITLE_ID_FORMAT, GROUP_TITLE, GROUP_ID)
         ) + LF;
     }
@@ -55,12 +55,12 @@ class UnsubscribeCommandTest extends AbstractCommandWithKeyboardTest {
 
     @Test
     void shouldProperlyExecuteCommandWithAlphabeticalGroupId() {
-        performCheck(ALPHABETICAL_GROUP_ID, UnsubscribeCommand.GROUP_NOT_FOUND_FORMAT);
+        performCheck(ALPHABETICAL_GROUP_ID, UnsubscribeCommand.SUBSCRIPTION_NOT_FOUND_FORMAT);
     }
 
     @Test
     void shouldProperlyExecuteCommandWithUnknownGroupId() {
-        performCheck(GROUP_ID.toString(), UnsubscribeCommand.GROUP_NOT_FOUND_FORMAT);
+        performCheck(GROUP_ID.toString(), UnsubscribeCommand.SUBSCRIPTION_NOT_FOUND_FORMAT);
     }
 
     @Test
