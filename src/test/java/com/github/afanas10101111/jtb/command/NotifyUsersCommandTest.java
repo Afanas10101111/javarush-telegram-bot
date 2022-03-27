@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.List;
 
 import static com.github.afanas10101111.jtb.command.CommandName.NOTIFY;
+import static org.apache.commons.lang3.StringUtils.SPACE;
 
 class NotifyUsersCommandTest extends AbstractCommandTest {
     private static final String MESSAGE_FOR_USERS = "The Bot is going crazy";
@@ -34,9 +35,9 @@ class NotifyUsersCommandTest extends AbstractCommandTest {
         Mockito.when(userService.findAllActiveUsers()).thenReturn(List.of(user));
 
         Update update = getMockedUpdate();
-        Mockito.when(update.getMessage().getText()).thenReturn(getCommandName() + " " + MESSAGE_FOR_USERS);
+        update.getMessage().setText(getCommandName() + SPACE + MESSAGE_FOR_USERS);
 
         getCommand().execute(update);
-        Mockito.verify(messageService).sendMessage(CHAT_ID.toString(), MESSAGE_FOR_USERS);
+        verifyMessageServiceCall(CHAT_ID.toString(), MESSAGE_FOR_USERS);
     }
 }

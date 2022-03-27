@@ -9,10 +9,11 @@ public enum CommandName {
     GREETING("/greeting"),
     START("/start"),
     STOP("/stop"),
-    HELP("/help"),
     SUBSCRIBE("/subscribe"),
-    VIEW_SUBSCRIPTIONS("/viewSubscriptions"),
+    SUBSCRIPTIONS("/subscriptions"),
     UNSUBSCRIBE("/unsubscribe"),
+    KEYBOARD("/keyboard"),
+    HELP("/help"),
     ADMIN_HELP("/aHelp"),
     STAT("/stat"),
     NOTIFY("/notify");

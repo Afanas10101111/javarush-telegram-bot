@@ -8,22 +8,23 @@ import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import javax.ws.rs.NotFoundException;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessage;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessageArgument;
 import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
+import static com.github.afanas10101111.jtb.command.util.KeyboardUtil.getNumericKeyboard;
 import static org.apache.commons.lang3.StringUtils.LF;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 @RequiredArgsConstructor
 public class UnsubscribeCommand implements Command {
     public static final String UNSUBSCRIBED_FORMAT = "Отписал от группы %s";
-    public static final String GROUP_NOT_FOUND_FORMAT = "Среди твоих подписок нет группы с ID = %s";
-    public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
-    public static final String INFORMATION_FORMAT = "Передай ID группы, от которой хочешь отписаться. " +
-            "Например: " + UNSUBSCRIBE.getName() + " 16.\n" +
+    public static final String SUBSCRIPTION_NOT_FOUND_FORMAT = "Среди твоих подписок нет группы с ID = %s";
+    public static final String ACTIVE_SUBSCRIPTION_FORMAT = "%s - %s";
+    public static final String UNSUBSCRIBE_INFORMATION_FORMAT = "Нажми на клавишу с ID группы от которой хочешь отписаться.\n" +
             "Вот список твоих подписок:\n\n" +
             "Имя группы - ID группы\n\n" +
             "%s";
@@ -56,16 +57,21 @@ public class UnsubscribeCommand implements Command {
         }
     }
 
-    private void sendGroupNotFound(String chatId, String groupId) {
-        messageService.sendMessage(chatId, String.format(GROUP_NOT_FOUND_FORMAT, groupId));
+    private void sendGroupIdList(String chatId, User user) {
+        StringBuilder groupIds = new StringBuilder();
+        List<Integer> groupSubIds = new ArrayList<>();
+        user.getGroupSubs().forEach(groupSub -> {
+            groupSubIds.add(groupSub.getId());
+            groupIds.append(String.format(ACTIVE_SUBSCRIPTION_FORMAT, groupSub.getTitle(), groupSub.getId())).append(LF);
+        });
+        messageService.sendMessage(
+                chatId,
+                String.format(UNSUBSCRIBE_INFORMATION_FORMAT, groupIds.toString()),
+                getNumericKeyboard(UNSUBSCRIBE.getName(), groupSubIds)
+        );
     }
 
-    private void sendGroupIdList(String chatId, User user) {
-        messageService.sendMessage(chatId, String.format(
-                INFORMATION_FORMAT,
-                user.getGroupSubs().stream()
-                        .map(group -> String.format(GROUP_TITLE_ID_FORMAT, group.getTitle(), group.getId()))
-                        .collect(Collectors.joining(LF))
-        ));
+    private void sendGroupNotFound(String chatId, String groupId) {
+        messageService.sendMessage(chatId, String.format(SUBSCRIPTION_NOT_FOUND_FORMAT, groupId));
     }
 }

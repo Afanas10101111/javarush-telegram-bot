@@ -14,13 +14,14 @@ import java.util.Set;
 import static com.github.afanas10101111.jtb.command.CommandName.ADMIN_HELP;
 import static com.github.afanas10101111.jtb.command.CommandName.GREETING;
 import static com.github.afanas10101111.jtb.command.CommandName.HELP;
+import static com.github.afanas10101111.jtb.command.CommandName.KEYBOARD;
 import static com.github.afanas10101111.jtb.command.CommandName.NOTIFY;
 import static com.github.afanas10101111.jtb.command.CommandName.START;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
 import static com.github.afanas10101111.jtb.command.CommandName.STOP;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
-import static com.github.afanas10101111.jtb.command.CommandName.VIEW_SUBSCRIPTIONS;
+import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIPTIONS;
 import static java.util.Objects.nonNull;
 
 public class CommandContainer {
@@ -45,10 +46,11 @@ public class CommandContainer {
                 .put(GREETING.getName().toLowerCase(), new GreetingCommand(messageService))
                 .put(START.getName().toLowerCase(), new StartCommand(messageService, userService))
                 .put(STOP.getName().toLowerCase(), new StopCommand(messageService, userService))
-                .put(HELP.getName().toLowerCase(), new HelpCommand(messageService))
                 .put(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, groupSubService, client))
-                .put(VIEW_SUBSCRIPTIONS.getName().toLowerCase(), new ViewSubscriptionsCommand(messageService, userService))
+                .put(SUBSCRIPTIONS.getName().toLowerCase(), new SubscriptionsCommand(messageService, userService))
                 .put(UNSUBSCRIBE.getName().toLowerCase(), new UnsubscribeCommand(messageService, userService, groupSubService))
+                .put(KEYBOARD.getName().toLowerCase(), new KeyboardCommand(messageService))
+                .put(HELP.getName().toLowerCase(), new HelpCommand(messageService))
                 .put(ADMIN_HELP.getName().toLowerCase(), new AdminHelpCommand(messageService))
                 .put(STAT.getName().toLowerCase(), new StatCommand(messageService, statisticService))
                 .put(NOTIFY.getName().toLowerCase(), new NotifyUsersCommand(messageService, userService))

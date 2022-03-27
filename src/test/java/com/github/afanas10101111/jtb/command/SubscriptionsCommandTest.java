@@ -8,22 +8,22 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.github.afanas10101111.jtb.command.CommandName.VIEW_SUBSCRIPTIONS;
+import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIPTIONS;
 
-class ViewSubscriptionsCommandTest extends AbstractCommandTest {
+class SubscriptionsCommandTest extends AbstractCommandTest {
     private static final int[] IDS = {1, 2};
     private static final String[] TITLES = {"first", "second"};
 
     @Override
     String getCommandName() {
-        return VIEW_SUBSCRIPTIONS.getName();
+        return SUBSCRIPTIONS.getName();
     }
 
     @Override
     String getCommandMessage() {
-        return ViewSubscriptionsCommand.MESSAGE +
-                String.format(ViewSubscriptionsCommand.GROUP_TITLE_ID_FORMAT + "\n", TITLES[0], IDS[0]) +
-                String.format(ViewSubscriptionsCommand.GROUP_TITLE_ID_FORMAT, TITLES[1], IDS[1]);
+        return SubscriptionsCommand.MESSAGE +
+                String.format(SubscriptionsCommand.GROUP_TITLE_ID_FORMAT + "\n", TITLES[0], IDS[0]) +
+                String.format(SubscriptionsCommand.GROUP_TITLE_ID_FORMAT, TITLES[1], IDS[1]);
     }
 
     @Override
@@ -34,7 +34,7 @@ class ViewSubscriptionsCommandTest extends AbstractCommandTest {
         User user = new User();
         user.setGroupSubs(groupSubs);
         Mockito.when(userService.findByChatId(CHAT_ID.toString())).thenReturn(Optional.of(user));
-        return new ViewSubscriptionsCommand(messageService, userService);
+        return new SubscriptionsCommand(messageService, userService);
     }
 
     private GroupSub createGroupSub(Integer id, String title) {
