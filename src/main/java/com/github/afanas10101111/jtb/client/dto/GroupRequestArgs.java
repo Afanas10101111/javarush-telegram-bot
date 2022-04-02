@@ -12,6 +12,7 @@ public class GroupRequestArgs {
     private final String query;
     private final GroupInfoType type;
     private final GroupFilter filter;
+    private final GroupOrder order;
     private final Integer offset;
     private final Integer limit;
 
@@ -25,6 +26,9 @@ public class GroupRequestArgs {
         }
         if(nonNull(filter)) {
             queries.put("filter", filter);
+        }
+        if(nonNull(order)) {
+            queries.put("order", order);
         }
         if(nonNull(offset)) {
             queries.put("offset", offset);

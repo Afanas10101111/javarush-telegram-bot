@@ -18,6 +18,7 @@ import java.util.List;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessage;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessageArgument;
+import static com.github.afanas10101111.jtb.client.dto.GroupOrder.GROUP_ID;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.util.KeyboardUtil.getNumericKeyboard;
 import static java.util.Objects.isNull;
@@ -64,7 +65,7 @@ public class SubscribeCommand implements Command {
     private void sendGroupIdList(String chatId) {
         StringBuilder groupIds = new StringBuilder();
         List<Integer> groupInfoIds = new ArrayList<>();
-        client.getGroupList(GroupRequestArgs.builder().build()).forEach(groupInfo -> {
+        client.getGroupList(GroupRequestArgs.builder().order(GROUP_ID).build()).forEach(groupInfo -> {
             groupIds.append(String.format(GROUP_TITLE_ID_FORMAT, groupInfo.getTitle(), groupInfo.getId())).append(LF);
             groupInfoIds.add(groupInfo.getId());
         });
