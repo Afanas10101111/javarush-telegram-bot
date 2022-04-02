@@ -66,10 +66,17 @@ public class JavaRushTelegramBot extends TelegramLongPollingBot {
                 commandContainer.retrieveCommand(extractCommandIdentifier(update), extractUsername(update)).execute(update);
             }
         } catch (UserNotFoundException e) {
-            log.warn("onUpdateReceived -> UserNotFoundException has been occurred:\n{}", Arrays.toString(e.getStackTrace()));
+            log.warn(
+                    "onUpdateReceived -> UserNotFoundException has been occurred: {}.\n{}",
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace())
+            );
             userNotFoundExceptionCommand.execute(update);
         } catch (Exception e) {
-            log.error("onUpdateReceived -> Exception has been occurred:\n{}", Arrays.toString(e.getStackTrace()));
+            log.error(
+                    "onUpdateReceived -> Exception has been occurred: {}.\n{}",
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace()));
             otherExceptionCommand.execute(update);
         }
     }

@@ -18,7 +18,6 @@ import static org.apache.commons.lang3.StringUtils.LF;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 
 class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
     private static final String GROUP_TITLE = "title";

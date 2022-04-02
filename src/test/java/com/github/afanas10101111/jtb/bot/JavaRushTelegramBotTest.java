@@ -6,7 +6,6 @@ import com.github.afanas10101111.jtb.exception.UserNotFoundException;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,8 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.lang.reflect.Field;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JavaRushTelegramBotTest {
     private Command userNotFoundExceptionCommand = Mockito.mock(Command.class);
