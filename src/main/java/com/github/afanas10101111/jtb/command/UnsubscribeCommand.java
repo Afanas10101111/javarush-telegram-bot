@@ -1,5 +1,6 @@
 package com.github.afanas10101111.jtb.command;
 
+import com.github.afanas10101111.jtb.exception.UserNotFoundException;
 import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
@@ -7,7 +8,6 @@ import com.github.afanas10101111.jtb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class UnsubscribeCommand implements Command {
     public void execute(Update update) {
         String message = extractMessage(update);
         String chatId = extractChatId(update);
-        User user = userService.findByChatId(chatId).orElseThrow(NotFoundException::new);
+        User user = userService.findByChatId(chatId).orElseThrow(UserNotFoundException::new);
         if (message.equalsIgnoreCase(UNSUBSCRIBE.getName())) {
             sendGroupIdList(chatId, user);
             return;

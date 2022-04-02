@@ -8,7 +8,6 @@ import com.github.afanas10101111.jtb.repository.GroupSubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,18 +15,16 @@ import java.util.Optional;
 @Service
 public class GroupSubServiceImpl implements GroupSubService {
     private final GroupSubRepository repository;
-    private final UserService userService;
     private final GroupClient client;
 
     @Override
-    public GroupSub save(String chatId, GroupDiscussionInfo groupDiscussionInfo) {
-        User user = userService.findByChatId(chatId).orElseThrow(NotFoundException::new);
+    public GroupSub save(User user, GroupDiscussionInfo groupDiscussionInfo) {
         GroupSub groupSub;
         Optional<GroupSub> groupSubFromDB = repository.findById(groupDiscussionInfo.getId());
         if (groupSubFromDB.isPresent()) {
             groupSub = groupSubFromDB.get();
             Optional<User> subscribed = groupSub.getUsers().stream()
-                    .filter(u -> u.getChatId().equalsIgnoreCase(chatId))
+                    .filter(u -> u.equals(user))
                     .findFirst();
             if (subscribed.isEmpty()) {
                 groupSub.addUser(user);

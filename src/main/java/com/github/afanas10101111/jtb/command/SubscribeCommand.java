@@ -3,9 +3,12 @@ package com.github.afanas10101111.jtb.command;
 import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.client.dto.GroupRequestArgs;
+import com.github.afanas10101111.jtb.exception.UserNotFoundException;
 import com.github.afanas10101111.jtb.model.GroupSub;
+import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
+import com.github.afanas10101111.jtb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -32,12 +35,14 @@ public class SubscribeCommand implements Command {
             "%s";
 
     private final SendBotMessageService messageService;
+    private final UserService userService;
     private final GroupSubService groupSubService;
     private final GroupClient client;
 
     @Override
     public void execute(Update update) {
         String chatId = extractChatId(update);
+        User user = userService.findByChatId(chatId).orElseThrow(UserNotFoundException::new);
         if (extractMessage(update).equalsIgnoreCase(SUBSCRIBE.getName())) {
             sendGroupIdList(chatId);
             return;
@@ -49,7 +54,7 @@ public class SubscribeCommand implements Command {
                 sendGroupNotFound(chatId, groupId);
                 return;
             }
-            GroupSub savedGroupSub = groupSubService.save(chatId, groupById);
+            GroupSub savedGroupSub = groupSubService.save(user, groupById);
             messageService.sendMessage(chatId, String.format(SUBSCRIBED_FORMAT, savedGroupSub.getTitle()));
         } else {
             sendGroupNotFound(chatId, groupId);

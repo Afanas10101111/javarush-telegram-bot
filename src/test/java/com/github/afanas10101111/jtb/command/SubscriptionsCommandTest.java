@@ -21,9 +21,11 @@ class SubscriptionsCommandTest extends AbstractCommandTest {
 
     @Override
     String getCommandMessage() {
-        return SubscriptionsCommand.MESSAGE +
+        return String.format(
+                SubscriptionsCommand.MESSAGE_FORMAT,
+                SubscriptionsCommand.USER_IS_INACTIVE,
                 String.format(SubscriptionsCommand.GROUP_TITLE_ID_FORMAT + "\n", TITLES[0], IDS[0]) +
-                String.format(SubscriptionsCommand.GROUP_TITLE_ID_FORMAT, TITLES[1], IDS[1]);
+                        String.format(SubscriptionsCommand.GROUP_TITLE_ID_FORMAT, TITLES[1], IDS[1]));
     }
 
     @Override

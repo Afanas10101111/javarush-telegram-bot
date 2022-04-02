@@ -4,12 +4,14 @@ import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.client.dto.GroupInfo;
 import com.github.afanas10101111.jtb.command.util.KeyboardUtil;
 import com.github.afanas10101111.jtb.model.GroupSub;
+import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static org.apache.commons.lang3.StringUtils.LF;
@@ -38,11 +40,17 @@ class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
 
     @Override
     Command getCommand() {
+        String chatId = CHAT_ID.toString();
+        User user = new User();
+        user.setChatId(chatId);
+        Mockito.when(userService.findByChatId(chatId)).thenReturn(Optional.of(user));
+
         GroupInfo groupInfo = new GroupInfo();
         groupInfo.setTitle(GROUP_TITLE);
         groupInfo.setId(GROUP_ID);
         Mockito.when(client.getGroupList(any())).thenReturn(List.of(groupInfo));
-        return new SubscribeCommand(messageService, groupSubService, client);
+
+        return new SubscribeCommand(messageService, userService, groupSubService, client);
     }
 
     @Override
@@ -66,7 +74,7 @@ class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
 
         GroupSub savedGroupSub = new GroupSub();
         savedGroupSub.setTitle(groupId);
-        Mockito.when(groupSubService.save(anyString(), any())).thenReturn(savedGroupSub);
+        Mockito.when(groupSubService.save(any(User.class), any())).thenReturn(savedGroupSub);
 
         performCheck(groupId, SubscribeCommand.SUBSCRIBED_FORMAT, Integer.parseInt(groupId));
     }
