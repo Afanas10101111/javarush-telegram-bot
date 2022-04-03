@@ -1,6 +1,13 @@
 Release Notes
 ========
 
+# 1.4.0
+Release version:
+* The keyboard is now available to users
+* Bot can respond to several customized greetings
+* Bot can respond even when an exception occurs
+* Admin can send notifications to active users
+
 ## 1.3.0
 * [FEATURE] JTB-16: Implement keyboard
 
@@ -10,7 +17,7 @@ Release Notes
 ## 1.1.0
 * [FEATURE] JTB-13: Teach bot to say "Hi!"
 
-## 1.0.0
+# 1.0.0
 MVP version is ready:
 * User can activate/inactivate bot
 * User can subscribe/unsubscribe on articles groups
