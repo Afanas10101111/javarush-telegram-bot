@@ -10,7 +10,8 @@ import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId
 
 @RequiredArgsConstructor
 public class StartCommand implements Command {
-    public static final String MESSAGE = "Привет! Я готов помочь тебе быть в курсе выхода всех интересующих тебя статей на Java Rush";
+    public static final String MESSAGE =
+            "Привет! Я готов помочь тебе быть в курсе выхода всех интересующих тебя статей на Java Rush";
 
     private final SendBotMessageService messageService;
     private final UserService userService;

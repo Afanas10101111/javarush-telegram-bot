@@ -14,13 +14,15 @@ import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessage;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractUsername;
 import static com.github.afanas10101111.jtb.command.CommandName.NOTIFY;
+import static com.github.afanas10101111.jtb.command.Emoji.SMILE;
 
 @Slf4j
 @RequiredArgsConstructor
 @AdminCommand
 public class NotifyUsersCommand implements Command {
-    public static final String MESSAGE = "Чтобы отправить сообщение пользователям, его нужно сначала написать \uD83D\uDE42\n" +
-            "Например: " + NOTIFY.getName() + " Всем привет!\n" +
+    public static final String MESSAGE = "Чтобы отправить сообщение пользователям, его нужно сначала написать " +
+            SMILE.getTextValue() +
+            "\nНапример: " + NOTIFY.getName() + " Всем привет!\n" +
             "Все пользователи получат сообщение \"Всем привет!\"";
 
     private final SendBotMessageService messageService;

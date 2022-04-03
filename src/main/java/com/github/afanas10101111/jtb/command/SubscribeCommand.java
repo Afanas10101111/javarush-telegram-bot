@@ -20,6 +20,7 @@ import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessag
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractMessageArgument;
 import static com.github.afanas10101111.jtb.client.dto.GroupOrder.GROUP_ID;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
+import static com.github.afanas10101111.jtb.command.Emoji.UPSIDE_DOWN_SMILE;
 import static com.github.afanas10101111.jtb.command.util.KeyboardUtil.getNumericKeyboard;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.LF;
@@ -31,8 +32,8 @@ public class SubscribeCommand implements Command {
     public static final String GROUP_NOT_FOUND_FORMAT = "Нет группы с ID = %s";
     public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
     public static final String SUBSCRIBE_INFORMATION_FORMAT = "Чтобы подписаться на группу, нажми на клавишу с нужным ID группы.\n" +
-            "Вот список всех групп - выбирай \uD83D\uDE43\n\n" +
-            "Имя группы - ID группы\n\n" +
+            "Вот список всех групп - выбирай " + UPSIDE_DOWN_SMILE.getTextValue() +
+            "\n\nИмя группы - ID группы\n\n" +
             "%s";
 
     private final SendBotMessageService messageService;
