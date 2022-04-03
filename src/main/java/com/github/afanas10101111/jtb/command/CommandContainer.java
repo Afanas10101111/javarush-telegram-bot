@@ -46,7 +46,7 @@ public class CommandContainer {
                 .put(GREETING.getName().toLowerCase(), new GreetingCommand(messageService))
                 .put(START.getName().toLowerCase(), new StartCommand(messageService, userService))
                 .put(STOP.getName().toLowerCase(), new StopCommand(messageService, userService))
-                .put(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, groupSubService, client))
+                .put(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, userService, groupSubService, client))
                 .put(SUBSCRIPTIONS.getName().toLowerCase(), new SubscriptionsCommand(messageService, userService))
                 .put(UNSUBSCRIBE.getName().toLowerCase(), new UnsubscribeCommand(messageService, userService, groupSubService))
                 .put(KEYBOARD.getName().toLowerCase(), new KeyboardCommand(messageService))

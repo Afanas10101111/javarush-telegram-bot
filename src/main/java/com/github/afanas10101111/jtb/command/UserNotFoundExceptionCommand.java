@@ -5,12 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
-import static com.github.afanas10101111.jtb.command.Emoji.SAD_SMILE;
+import static com.github.afanas10101111.jtb.command.CommandName.START;
+import static com.github.afanas10101111.jtb.command.Emoji.SUNGLASSES_SMILE;
 
 @RequiredArgsConstructor
-public class UnknownCommand implements Command {
-    public static final String MESSAGE = "Ничего не понял " + SAD_SMILE.getTextValue() +
-            "\nВведи /help чтобы ознакомиться со списком команд";
+public class UserNotFoundExceptionCommand implements Command {
+    public static final String MESSAGE = "Кажется, мы еще незнакомы " + SUNGLASSES_SMILE.getTextValue() +
+            "\nВведи " + START.getName() + " чтоб представиться";
 
     private final SendBotMessageService service;
 

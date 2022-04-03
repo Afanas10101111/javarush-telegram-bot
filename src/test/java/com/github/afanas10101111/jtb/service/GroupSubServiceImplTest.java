@@ -3,6 +3,7 @@ package com.github.afanas10101111.jtb.service;
 import com.github.afanas10101111.jtb.client.GroupClientImpl;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
+import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.repository.GroupSubRepository;
 import com.github.afanas10101111.jtb.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,9 @@ class GroupSubServiceImplTest {
     }
 
     private void performCheck(int groupId, String groupTitle, int subscribersCount, String chatId) {
-        GroupSub saved = service.save(chatId, createGroupDiscussionInfo(groupId, groupTitle));
+        User user = new User();
+        user.setChatId(chatId);
+        GroupSub saved = service.save(user, createGroupDiscussionInfo(groupId, groupTitle));
         checkGroupSub(saved, groupId, groupTitle, subscribersCount, chatId);
 
         GroupSub fromDB = groupSubRepository.findById(groupId).orElseThrow();

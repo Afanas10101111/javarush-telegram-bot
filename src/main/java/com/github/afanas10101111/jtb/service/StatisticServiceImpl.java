@@ -30,6 +30,7 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     private double getGroupsPerUser(List<User> allActiveUsers) {
-        return (double) allActiveUsers.stream().mapToInt(u -> u.getGroupSubs().size()).sum() / allActiveUsers.size();
+        int allActiveUsersCount = allActiveUsers.isEmpty() ? 1 : allActiveUsers.size();
+        return (double) allActiveUsers.stream().mapToInt(u -> u.getGroupSubs().size()).sum() / allActiveUsersCount;
     }
 }

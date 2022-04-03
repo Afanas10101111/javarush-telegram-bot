@@ -12,12 +12,15 @@ import static com.github.afanas10101111.jtb.command.CommandName.STOP;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIPTIONS;
 import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
+import static com.github.afanas10101111.jtb.command.Emoji.EXCLAMATION_SIGN;
+import static com.github.afanas10101111.jtb.command.Emoji.GREETING_SIGN;
+import static com.github.afanas10101111.jtb.command.Emoji.SMILE;
 
 @RequiredArgsConstructor
 public class HelpCommand implements Command {
-    public static final String MESSAGE = String.format("<b>✨Доступные команды:✨</b>\n\n" +
+    public static final String MESSAGE = String.format("%s<b>Доступные команды</b>%s" +
 
-                    "Начать\\закончить работу с ботом:\n" +
+                    "\n\nНачать\\закончить работу с ботом:\n" +
                     "%s - начать работу со мной\n" +
                     "%s - остановить работу со мной\n\n" +
 
@@ -29,7 +32,9 @@ public class HelpCommand implements Command {
                     "А еще можно:\n" +
                     "%s - вызвать клавиатуру\n" +
                     "%s - получить список команд\n" +
-                    "и поздороваться \uD83D\uDE42 попробуй \uD83D\uDC4B",
+                    "и поздороваться %s попробуй %s",
+            EXCLAMATION_SIGN.getTextValue(),
+            EXCLAMATION_SIGN.getTextValue(),
 
             START.getName(),
             STOP.getName(),
@@ -39,7 +44,10 @@ public class HelpCommand implements Command {
             UNSUBSCRIBE.getName(),
 
             KEYBOARD.getName(),
-            HELP.getName());
+            HELP.getName(),
+
+            SMILE.getTextValue(),
+            GREETING_SIGN.getTextValue());
 
     private final SendBotMessageService service;
 

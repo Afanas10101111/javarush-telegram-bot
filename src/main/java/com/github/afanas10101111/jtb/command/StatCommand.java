@@ -12,13 +12,16 @@ import java.util.stream.Collectors;
 
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractChatId;
 import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractUsername;
+import static com.github.afanas10101111.jtb.command.Emoji.EXCLAMATION_SIGN;
 
 @Slf4j
 @RequiredArgsConstructor
 @AdminCommand
 public class StatCommand implements Command {
-    public static final String MESSAGE = "✨<b>Статистика</b>✨\n" +
-            "- Количество активных пользователей: %s\n" +
+    public static final String MESSAGE = EXCLAMATION_SIGN.getTextValue() +
+            "<b>Статистика</b>" +
+            EXCLAMATION_SIGN.getTextValue() +
+            "\n- Количество активных пользователей: %s\n" +
             "- Количество неактивных пользователей: %s\n" +
             "- Среднее количество групп на одного пользователя: %s\n\n" +
             "<b>Информация по активным группам</b>:\n" +

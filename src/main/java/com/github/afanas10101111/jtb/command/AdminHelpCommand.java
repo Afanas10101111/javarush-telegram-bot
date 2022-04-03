@@ -11,15 +11,19 @@ import static com.github.afanas10101111.jtb.bot.util.BotUpdateUtil.extractUserna
 import static com.github.afanas10101111.jtb.command.CommandName.ADMIN_HELP;
 import static com.github.afanas10101111.jtb.command.CommandName.NOTIFY;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
+import static com.github.afanas10101111.jtb.command.Emoji.EXCLAMATION_SIGN;
 
 @Slf4j
 @RequiredArgsConstructor
 @AdminCommand
 public class AdminHelpCommand implements Command {
-    public static final String MESSAGE = String.format("<b>✨Доступные для админа команды:✨</b>\n\n" +
-                    "%s - узнать количество активных пользователей\n" +
+    public static final String MESSAGE = String.format("%s<b>Доступные для админа команды</b>%s" +
+                    "\n\n%s - узнать количество активных пользователей\n" +
                     "%s - отправить сообщение всем активным пользователям\n" +
                     "%s - получить список команд",
+            EXCLAMATION_SIGN.getTextValue(),
+            EXCLAMATION_SIGN.getTextValue(),
+
             STAT.getName(),
             NOTIFY.getName(),
             ADMIN_HELP.getName());

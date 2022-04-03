@@ -1,14 +1,13 @@
 package com.github.afanas10101111.jtb.service;
 
 import com.github.afanas10101111.jtb.bot.JavaRushTelegramBot;
+import com.github.afanas10101111.jtb.exception.BotExecuteException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SendBotMessageServiceImpl implements SendBotMessageService {
@@ -29,7 +28,7 @@ public class SendBotMessageServiceImpl implements SendBotMessageService {
         try {
             bot.execute(sm);
         } catch (TelegramApiException e) {
-            log.error("sendMessage -> {}", e.getMessage());
+            throw new BotExecuteException(e);
         }
     }
 }
