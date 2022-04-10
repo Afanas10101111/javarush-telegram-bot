@@ -12,14 +12,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.github.afanas10101111.jtb.command.Emoji.COFFEE_SIGN;
+
 @RequiredArgsConstructor
 @Service
 public class NewArticleServiceImpl implements NewArticleService {
-    public static final String MESSAGE_FORMAT =
-            "✨Вышла новая статья\n" +
-                    "<b>%s</b>\n" +
-                    "в группе\n" +
-                    "<b>%s</b>.✨\n\n" +
+    public static final String MESSAGE_FORMAT = COFFEE_SIGN.getTextValue() +
+            " В группе <b>%s</b> вышла новая статья:\n" +
+                    "<b>%s</b>\n\n" +
                     "<b>Описание:</b> %s\n\n" +
                     "<b>Ссылка:</b> %s\n";
     public static final String WEB_POST_FORMAT = "https://javarush.ru/groups/posts/%s";
@@ -52,7 +52,7 @@ public class NewArticleServiceImpl implements NewArticleService {
         List<String> messages = newPosts.stream()
                 .map(post -> String.format(
                         MESSAGE_FORMAT,
-                        post.getTitle(), groupSub.getTitle(), post.getDescription(), getPostUrl(post.getKey())
+                        groupSub.getTitle(), post.getTitle(), post.getDescription(), getPostUrl(post.getKey())
                 ))
                 .collect(Collectors.toList());
         groupSub.getUsers().stream()

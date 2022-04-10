@@ -8,17 +8,27 @@ import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.lang.reflect.Field;
 import java.util.Set;
 
+@ExtendWith(MockitoExtension.class)
 class JavaRushTelegramBotTest {
-    private Command userNotFoundExceptionCommand = Mockito.mock(Command.class);
-    private Command otherExceptionCommand = Mockito.mock(Command.class);
-    private Update update = Mockito.mock(Update.class);
     private JavaRushTelegramBot bot;
+
+    @Mock
+    private Command userNotFoundExceptionCommand;
+
+    @Mock
+    private Command otherExceptionCommand;
+
+    @Mock
+    private Update update;
 
     @BeforeEach
     void initBot() throws NoSuchFieldException, IllegalAccessException {

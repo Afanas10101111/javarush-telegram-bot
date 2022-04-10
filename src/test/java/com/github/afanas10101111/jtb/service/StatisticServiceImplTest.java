@@ -5,18 +5,29 @@ import com.github.afanas10101111.jtb.dto.StatisticTo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@ExtendWith(MockitoExtension.class)
 class StatisticServiceImplTest {
-    private final GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
-    private final UserService userService = Mockito.mock(UserService.class);
-    private final StatisticService statisticService = new StatisticServiceImpl(groupSubService, userService);
+
+    @Mock
+    private GroupSubService groupSubService;
+
+    @Mock
+    private UserService userService;
+
+    @InjectMocks
+    private StatisticServiceImpl statisticService;
 
     @Test
     void calculateBotStatistic() {
