@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.4.1
+* [TECH] JTB-17: Change text of article notification
+
 # 1.4.0
 Release version:
 * The keyboard is now available to users
