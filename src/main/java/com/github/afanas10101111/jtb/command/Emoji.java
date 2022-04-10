@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Emoji {
     EXCLAMATION_SIGN("❕"),
+    COFFEE_SIGN("☕"),
     GREETING_SIGN("\uD83D\uDC4B"),
     KEYS_SIGN("\uD83C\uDFB9"),
     SMILE("\uD83D\uDE42"),

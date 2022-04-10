@@ -2,16 +2,24 @@ package com.github.afanas10101111.jtb.service;
 
 import com.github.afanas10101111.jtb.bot.JavaRushTelegramBot;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+@ExtendWith(MockitoExtension.class)
 class SendBotMessageServiceImplTest {
     private static final String CHAT_ID = "test_chat_id";
     private static final String MESSAGE = "test_message";
 
-    private final JavaRushTelegramBot bot = Mockito.mock(JavaRushTelegramBot.class);
-    private final SendBotMessageService service = new SendBotMessageServiceImpl(bot);
+    @Mock
+    private JavaRushTelegramBot bot;
+
+    @InjectMocks
+    private SendBotMessageServiceImpl service;
 
     @Test
     void shouldProperlySendMessage() throws TelegramApiException {

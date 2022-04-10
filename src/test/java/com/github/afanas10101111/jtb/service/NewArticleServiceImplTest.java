@@ -5,17 +5,30 @@ import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 
+@ExtendWith(MockitoExtension.class)
 class NewArticleServiceImplTest {
-    private final SendBotMessageService messageService = Mockito.mock(SendBotMessageService.class);
-    private final GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
-    private final PostClient client = Mockito.mock(PostClient.class);
-    private final NewArticleService newArticleService = new NewArticleServiceImpl(messageService, groupSubService, client);
+
+    @Mock
+    private SendBotMessageService messageService;
+
+    @Mock
+    private GroupSubService groupSubService;
+
+    @Mock
+    private PostClient client;
+
+    @InjectMocks
+    private NewArticleServiceImpl newArticleService;
 
     @Test
     void findAndNotify() {
@@ -39,7 +52,7 @@ class NewArticleServiceImplTest {
         newArticleService.findAndNotify();
         Mockito.verify(messageService).sendMessage(user.getChatId(), String.format(
                 NewArticleServiceImpl.MESSAGE_FORMAT,
-                post.getTitle(), groupSub.getTitle(), post.getDescription(), String.format(NewArticleServiceImpl.WEB_POST_FORMAT, post.getKey())
+                groupSub.getTitle(), post.getTitle(), post.getDescription(), String.format(NewArticleServiceImpl.WEB_POST_FORMAT, post.getKey())
                 ));
     }
 }
