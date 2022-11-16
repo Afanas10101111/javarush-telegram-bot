@@ -32,7 +32,7 @@ class StatCommandTest extends AbstractCommandTest {
         Mockito.when(statisticService.calculateBotStatistic()).thenReturn(new StatisticTo(
                 1,
                 2,
-                List.of(new GroupStatTo(3, TITLE, 4)),
+                List.of(new GroupStatTo(3, TITLE, 4L)),
                 1.0
         ));
         return new StatCommand(messageService, statisticService);

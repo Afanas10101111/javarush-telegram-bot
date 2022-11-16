@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.4.2
+* [FEATURE] JTB-19: Count only active users for group statistics
+
 ## 1.4.1
 * [TECH] JTB-17: Change text of article notification
 
