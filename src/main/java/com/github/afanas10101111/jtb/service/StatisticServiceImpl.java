@@ -7,9 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 @RequiredArgsConstructor
 @Service
@@ -20,8 +19,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public StatisticTo calculateBotStatistic() {
         List<GroupStatTo> groupStatTos = groupSubService.findAll().stream()
-                .filter(g -> !isEmpty(g.getUsers()))
-                .map(groupSub -> new GroupStatTo(groupSub.getId(), groupSub.getTitle(), groupSub.getUsers().size()))
+                .map(gs -> new GroupStatTo(gs.getId(), gs.getTitle(), getActiveUsersCount(gs.getUsers())))
                 .collect(Collectors.toList());
         List<User> allInactiveUsers = userService.findAllInactiveUsers();
         List<User> allActiveUsers = userService.findAllActiveUsers();
@@ -32,5 +30,11 @@ public class StatisticServiceImpl implements StatisticService {
     private double getGroupsPerUser(List<User> allActiveUsers) {
         int allActiveUsersCount = allActiveUsers.isEmpty() ? 1 : allActiveUsers.size();
         return (double) allActiveUsers.stream().mapToInt(u -> u.getGroupSubs().size()).sum() / allActiveUsersCount;
+    }
+
+    private long getActiveUsersCount(Set<User> users) {
+        return users.stream()
+                .filter(User::isActive)
+                .count();
     }
 }

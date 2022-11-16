@@ -48,7 +48,7 @@ class StatisticServiceImplTest {
         assertEquals(1, statisticTo.getInactiveUserCount());
         assertEquals(1.0, statisticTo.getAverageGroupCountByUser());
         assertEquals(
-                List.of(new GroupStatTo(8, "Title", 1)),
+                List.of(new GroupStatTo(8, "Title", 0L)),
                 statisticTo.getGroupStatTos()
         );
     }

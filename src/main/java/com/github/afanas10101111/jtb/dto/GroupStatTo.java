@@ -6,5 +6,5 @@ import lombok.Data;
 public class GroupStatTo {
     private final Integer id;
     private final String title;
-    private final Integer activeUserCount;
+    private final Long activeUserCount;
 }
