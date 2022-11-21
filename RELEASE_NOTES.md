@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.4.3
+* [BUG] JTB-20: Handle NPE in PostClientImpl
+
 ## 1.4.2
 * [FEATURE] JTB-19: Count only active users for group statistics
 
