@@ -2,9 +2,11 @@ package com.github.afanas10101111.jtb.service;
 
 import com.github.afanas10101111.jtb.client.PostClient;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
+import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,14 +16,15 @@ import java.util.stream.Collectors;
 
 import static com.github.afanas10101111.jtb.command.Emoji.COFFEE_SIGN;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class NewArticleServiceImpl implements NewArticleService {
     public static final String MESSAGE_FORMAT = COFFEE_SIGN.getTextValue() +
             " В группе <b>%s</b> вышла новая статья:\n" +
-                    "<b>%s</b>\n\n" +
-                    "<b>Описание:</b> %s\n\n" +
-                    "<b>Ссылка:</b> %s\n";
+            "<b>%s</b>\n\n" +
+            "<b>Описание:</b> %s\n\n" +
+            "<b>Ссылка:</b> %s\n";
     public static final String WEB_POST_FORMAT = "https://javarush.ru/groups/posts/%s";
 
     private final SendBotMessageService sendMessageService;
@@ -57,11 +60,22 @@ public class NewArticleServiceImpl implements NewArticleService {
                 .collect(Collectors.toList());
         groupSub.getUsers().stream()
                 .filter(User::isActive)
-                .forEach(u -> messages
-                        .forEach(m -> sendMessageService.sendMessage(u.getChatId(), m)));
+                .forEach(u -> sendMessages(u, messages));
     }
 
     private String getPostUrl(String key) {
         return String.format(WEB_POST_FORMAT, key);
+    }
+
+    private void sendMessages(User user, List<String> messages) {
+        try {
+            messages.forEach(m -> sendMessageService.sendMessage(user.getChatId(), m));
+        } catch (BotBlockedByUserException e) {
+            log.warn(
+                    "notifySubscribers -> User with chatId={} has blocked me and will be marked as inactive",
+                    user.getChatId()
+            );
+            user.setActive(false);
+        }
     }
 }

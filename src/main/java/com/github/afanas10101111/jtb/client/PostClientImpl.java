@@ -30,7 +30,7 @@ public class PostClientImpl implements PostClient {
                 })
                 .getBody();
         if (newPosts == null) {
-            log.warn("GET {} returned null while a list is expected", javarushApiPostPath);
+            log.warn("findNewPosts -> GET {} returned null while a list is expected", javarushApiPostPath);
             return Collections.emptyList();
         } else {
             return newPosts.stream()

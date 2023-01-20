@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.4.4
+* [BUG] JTB-21: Handle TelegramApiRequestException (Forbidden: bot was blocked by the user)
+
 ## 1.4.3
 * [BUG] JTB-20: Handle NPE in PostClientImpl
 
