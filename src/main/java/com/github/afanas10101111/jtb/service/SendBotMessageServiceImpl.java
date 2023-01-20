@@ -31,11 +31,12 @@ public class SendBotMessageServiceImpl implements SendBotMessageService {
         sm.setReplyMarkup(keyboardMarkup);
         try {
             bot.execute(sm);
-        } catch (TelegramApiException e) {
-            if (e instanceof TelegramApiRequestException
-                    && BOT_WAS_BLOCKED_BY_THE_USER.equals(((TelegramApiRequestException) e).getApiResponse())) {
+        } catch (TelegramApiRequestException e) {
+            if (BOT_WAS_BLOCKED_BY_THE_USER.equals(e.getApiResponse())) {
                 throw new BotBlockedByUserException(e);
             }
+            throw new BotExecuteException(e);
+        } catch (TelegramApiException e) {
             throw new BotExecuteException(e);
         }
     }
