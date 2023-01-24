@@ -15,7 +15,7 @@ Required software:
 
 To deploy application, switch to needed branch and run bash script with credentials:
 
-$ start.sh bot_username bot_token bot_admins db_username db_password
+$ start.sh bot_username bot_token bot_admin_names bot_admin_chat_ids db_username db_password
 
 ### Gratitude
 I want to thank <a href="https://github.com/romankh3">Roman</a> for his <a href="https://github.com/javarushcommunity/javarush-telegrambot">project</a> which was taken as a sample.

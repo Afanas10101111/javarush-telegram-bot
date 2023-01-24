@@ -1,7 +1,8 @@
-package com.github.afanas10101111.jtb.service;
+package com.github.afanas10101111.jtb.service.impl;
 
 import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.repository.UserRepository;
+import com.github.afanas10101111.jtb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

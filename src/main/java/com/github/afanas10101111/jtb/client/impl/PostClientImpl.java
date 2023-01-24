@@ -1,5 +1,6 @@
-package com.github.afanas10101111.jtb.client;
+package com.github.afanas10101111.jtb.client.impl;
 
+import com.github.afanas10101111.jtb.client.PostClient;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import kong.unirest.GenericType;
 import kong.unirest.Unirest;

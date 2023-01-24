@@ -15,7 +15,8 @@ public enum Emoji {
     WINKING_SMILE("\uD83D\uDE09"),
     SUNGLASSES_SMILE("\uD83D\uDE0E"),
     TERRIFY_SMILE("\uD83D\uDE31"),
-    SAD_SMILE("\uD83D\uDE14");
+    SAD_SMILE("\uD83D\uDE14"),
+    SHIT("\uD83D\uDCA9");
 
     private final String textValue;
 }

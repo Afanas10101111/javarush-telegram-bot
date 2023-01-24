@@ -1,6 +1,7 @@
 package com.github.afanas10101111.jtb.client;
 
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
+import com.github.afanas10101111.jtb.client.impl.PostClientImpl;
 import kong.unirest.HttpMethod;
 import kong.unirest.MockClient;
 import org.apache.commons.lang3.StringUtils;

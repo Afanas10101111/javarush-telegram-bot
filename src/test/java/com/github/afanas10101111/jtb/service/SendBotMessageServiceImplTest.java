@@ -2,6 +2,7 @@ package com.github.afanas10101111.jtb.service;
 
 import com.github.afanas10101111.jtb.bot.JavaRushTelegramBot;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
+import com.github.afanas10101111.jtb.service.impl.SendBotMessageServiceImpl;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

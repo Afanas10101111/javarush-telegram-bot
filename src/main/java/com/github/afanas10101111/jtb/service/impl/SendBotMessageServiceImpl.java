@@ -1,8 +1,9 @@
-package com.github.afanas10101111.jtb.service;
+package com.github.afanas10101111.jtb.service.impl;
 
 import com.github.afanas10101111.jtb.bot.JavaRushTelegramBot;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
 import com.github.afanas10101111.jtb.exception.BotExecuteException;
+import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

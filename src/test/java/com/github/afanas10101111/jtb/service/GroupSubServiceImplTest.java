@@ -1,11 +1,13 @@
 package com.github.afanas10101111.jtb.service;
 
-import com.github.afanas10101111.jtb.client.GroupClientImpl;
+import com.github.afanas10101111.jtb.client.impl.GroupClientImpl;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.repository.GroupSubRepository;
 import com.github.afanas10101111.jtb.repository.UserRepository;
+import com.github.afanas10101111.jtb.service.impl.GroupSubServiceImpl;
+import com.github.afanas10101111.jtb.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;

@@ -1,10 +1,11 @@
-package com.github.afanas10101111.jtb.service;
+package com.github.afanas10101111.jtb.service.impl;
 
 import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
 import com.github.afanas10101111.jtb.repository.GroupSubRepository;
+import com.github.afanas10101111.jtb.service.GroupSubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.5.4
+* [FEATURE] JTB-22: Notify admins about errors
+
 ## 1.4.4
 * [BUG] JTB-21: Handle TelegramApiRequestException (Forbidden: bot was blocked by the user)
 

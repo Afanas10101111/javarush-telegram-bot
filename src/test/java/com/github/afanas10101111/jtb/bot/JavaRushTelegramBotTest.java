@@ -1,74 +1,69 @@
 package com.github.afanas10101111.jtb.bot;
 
-import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.command.Command;
+import com.github.afanas10101111.jtb.command.CommandContainer;
 import com.github.afanas10101111.jtb.exception.UserNotFoundException;
-import com.github.afanas10101111.jtb.service.GroupSubService;
-import com.github.afanas10101111.jtb.service.StatisticService;
-import com.github.afanas10101111.jtb.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 
-import java.lang.reflect.Field;
-import java.util.Set;
+import static com.github.afanas10101111.jtb.command.ExceptionCommandName.UNEXPECTED_EXCEPTION;
+import static com.github.afanas10101111.jtb.command.ExceptionCommandName.USER_NOT_FOUND;
 
 @ExtendWith(MockitoExtension.class)
 class JavaRushTelegramBotTest {
-    private JavaRushTelegramBot bot;
+    private static final String TEXT = "text";
+    private static final String NAME = "Spock";
 
     @Mock
-    private Command userNotFoundExceptionCommand;
+    private CommandContainer commandContainer;
 
     @Mock
-    private Command otherExceptionCommand;
+    private Command command;
 
     @Mock
     private Update update;
 
-    @BeforeEach
-    void initBot() throws NoSuchFieldException, IllegalAccessException {
-        UserService userService = Mockito.mock(UserService.class);
-        GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
-        StatisticService statisticService = Mockito.mock(StatisticService.class);
-        GroupClient client = Mockito.mock(GroupClient.class);
+    @InjectMocks
+    private JavaRushTelegramBot bot;
 
-        userNotFoundExceptionCommand = Mockito.mock(Command.class);
-        otherExceptionCommand = Mockito.mock(Command.class);
-        update = Mockito.mock(Update.class);
-        bot = new JavaRushTelegramBot(
-                userService,
-                groupSubService,
-                statisticService,
-                client,
-                Set.of("Admin"),
-                Set.of("Greeting")
-        );
-        setBotField(bot, "userNotFoundExceptionCommand", userNotFoundExceptionCommand);
-        setBotField(bot, "otherExceptionCommand", otherExceptionCommand);
+    @Test
+    void shouldCorrectExecuteCommand() {
+        User user = new User();
+        user.setUserName(NAME);
+        Message message = new Message();
+        message.setText(TEXT);
+        message.setFrom(user);
+
+        Mockito.when(update.getMessage()).thenReturn(message);
+        Mockito.when(update.hasMessage()).thenReturn(true);
+        Mockito.when(commandContainer.retrieveCommand(TEXT, NAME)).thenReturn(command);
+
+        bot.onUpdateReceived(update);
+        Mockito.verify(command).execute(update);
     }
 
     @Test
     void userNotFoundExceptionShouldExecuteCorrectCommand() {
         Mockito.when(update.hasMessage()).thenThrow(new UserNotFoundException());
+        Mockito.when(commandContainer.retrieveExceptionCommand(USER_NOT_FOUND)).thenReturn(command);
+
         bot.onUpdateReceived(update);
-        Mockito.verify(userNotFoundExceptionCommand).execute(update);
+        Mockito.verify(command).execute(update);
     }
 
     @Test
     void anyNotDefinedExceptionShouldExecuteCorrectCommand() {
         Mockito.when(update.hasMessage()).thenThrow(new NullPointerException());
-        bot.onUpdateReceived(update);
-        Mockito.verify(otherExceptionCommand).execute(update);
-    }
+        Mockito.when(commandContainer.retrieveExceptionCommand(UNEXPECTED_EXCEPTION)).thenReturn(command);
 
-    private void setBotField(JavaRushTelegramBot bot, String name, Object value) throws NoSuchFieldException, IllegalAccessException {
-        Field field = bot.getClass().getDeclaredField(name);
-        field.setAccessible(true);
-        field.set(bot, value);
+        bot.onUpdateReceived(update);
+        Mockito.verify(command).execute(update);
     }
 }

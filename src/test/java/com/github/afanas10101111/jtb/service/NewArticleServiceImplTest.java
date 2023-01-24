@@ -5,6 +5,7 @@ import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
+import com.github.afanas10101111.jtb.service.impl.NewArticleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
