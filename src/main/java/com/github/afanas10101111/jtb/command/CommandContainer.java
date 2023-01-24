@@ -49,7 +49,7 @@ public class CommandContainer {
             GroupSubService groupSubService,
             StatisticService statisticService,
             GroupClient client,
-            @Value("${bot.admins}") Set<String> admins,
+            @Value("${bot.admin_names}") Set<String> admins,
             @Value("${bot.known_greetings}") Set<String> knownGreetings
     ) {
         Set<String> knownGreetingsUTF8 = new HashSet<>();
