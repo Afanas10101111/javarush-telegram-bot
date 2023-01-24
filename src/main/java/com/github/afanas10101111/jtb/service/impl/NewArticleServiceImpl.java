@@ -1,10 +1,13 @@
-package com.github.afanas10101111.jtb.service;
+package com.github.afanas10101111.jtb.service.impl;
 
 import com.github.afanas10101111.jtb.client.PostClient;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
+import com.github.afanas10101111.jtb.service.GroupSubService;
+import com.github.afanas10101111.jtb.service.NewArticleService;
+import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

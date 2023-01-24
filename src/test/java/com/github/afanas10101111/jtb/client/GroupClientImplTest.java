@@ -4,6 +4,7 @@ import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.client.dto.GroupInfo;
 import com.github.afanas10101111.jtb.client.dto.GroupRequestArgs;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
+import com.github.afanas10101111.jtb.client.impl.GroupClientImpl;
 import kong.unirest.HttpMethod;
 import kong.unirest.MockClient;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static com.github.afanas10101111.jtb.client.GroupClientImpl.GROUP_BY_ID_PATH;
-import static com.github.afanas10101111.jtb.client.GroupClientImpl.GROUP_COUNT_PATH;
+import static com.github.afanas10101111.jtb.client.impl.GroupClientImpl.GROUP_BY_ID_PATH;
+import static com.github.afanas10101111.jtb.client.impl.GroupClientImpl.GROUP_COUNT_PATH;
 import static com.github.afanas10101111.jtb.client.dto.GroupInfoType.TECH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

@@ -1,8 +1,11 @@
-package com.github.afanas10101111.jtb.service;
+package com.github.afanas10101111.jtb.service.impl;
 
 import com.github.afanas10101111.jtb.dto.GroupStatTo;
 import com.github.afanas10101111.jtb.dto.StatisticTo;
 import com.github.afanas10101111.jtb.model.User;
+import com.github.afanas10101111.jtb.service.GroupSubService;
+import com.github.afanas10101111.jtb.service.StatisticService;
+import com.github.afanas10101111.jtb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

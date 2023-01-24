@@ -1,5 +1,6 @@
-package com.github.afanas10101111.jtb.client;
+package com.github.afanas10101111.jtb.client.impl;
 
+import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.dto.GroupDiscussionInfo;
 import com.github.afanas10101111.jtb.client.dto.GroupInfo;
 import com.github.afanas10101111.jtb.client.dto.GroupRequestArgs;

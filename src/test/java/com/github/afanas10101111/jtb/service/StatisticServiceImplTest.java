@@ -4,6 +4,7 @@ import com.github.afanas10101111.jtb.dto.GroupStatTo;
 import com.github.afanas10101111.jtb.dto.StatisticTo;
 import com.github.afanas10101111.jtb.model.GroupSub;
 import com.github.afanas10101111.jtb.model.User;
+import com.github.afanas10101111.jtb.service.impl.StatisticServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

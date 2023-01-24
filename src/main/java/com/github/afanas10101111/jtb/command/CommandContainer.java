@@ -7,7 +7,13 @@ import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
 import com.google.common.collect.ImmutableMap;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,27 +26,39 @@ import static com.github.afanas10101111.jtb.command.CommandName.START;
 import static com.github.afanas10101111.jtb.command.CommandName.STAT;
 import static com.github.afanas10101111.jtb.command.CommandName.STOP;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIBE;
-import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
 import static com.github.afanas10101111.jtb.command.CommandName.SUBSCRIPTIONS;
+import static com.github.afanas10101111.jtb.command.CommandName.UNSUBSCRIBE;
+import static com.github.afanas10101111.jtb.command.ExceptionCommandName.UNEXPECTED_EXCEPTION;
+import static com.github.afanas10101111.jtb.command.ExceptionCommandName.USER_NOT_FOUND;
+import static java.nio.charset.StandardCharsets.ISO_8859_1;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.nonNull;
 
+@Slf4j
+@Component
 public class CommandContainer {
-    private final Map<String, Command> commands;
-    private final Command unknown;
     private final Set<String> admins;
     private final Set<String> knownGreetings;
+    private final Command unknown;
+    private final Map<String, Command> commands;
+    private final Map<ExceptionCommandName, Command> exceptionCommands;
 
     public CommandContainer(
-            SendBotMessageService messageService,
+            @Lazy SendBotMessageService messageService,
             UserService userService,
             GroupSubService groupSubService,
             StatisticService statisticService,
             GroupClient client,
-            Set<String> admins,
-            Set<String> knownGreetings
+            @Value("${bot.admins}") Set<String> admins,
+            @Value("${bot.known_greetings}") Set<String> knownGreetings
     ) {
-        this.admins = admins;
-        this.knownGreetings = knownGreetings;
+        Set<String> knownGreetingsUTF8 = new HashSet<>();
+        knownGreetings.forEach(g -> knownGreetingsUTF8.add((new String(g.getBytes(ISO_8859_1), UTF_8)).toLowerCase()));
+        log.info("constructor -> admins: {}; knownGreetings: {}", admins, knownGreetingsUTF8);
+
+        this.knownGreetings = Collections.unmodifiableSet(knownGreetingsUTF8);
+        this.admins = Collections.unmodifiableSet(admins);
+
         unknown = new UnknownCommand(messageService);
         commands = ImmutableMap.<String, Command>builder()
                 .put(GREETING.getName().toLowerCase(), new GreetingCommand(messageService))
@@ -55,6 +73,10 @@ public class CommandContainer {
                 .put(STAT.getName().toLowerCase(), new StatCommand(messageService, statisticService))
                 .put(NOTIFY.getName().toLowerCase(), new NotifyUsersCommand(messageService, userService))
                 .build();
+        exceptionCommands = ImmutableMap.<ExceptionCommandName, Command>builder()
+                .put(USER_NOT_FOUND, new UserNotFoundExceptionCommand(messageService))
+                .put(UNEXPECTED_EXCEPTION, new OtherExceptionCommand(messageService, admins))
+                .build();
     }
 
     public Command retrieveCommand(String commandIdentifier, String username) {
@@ -67,6 +89,10 @@ public class CommandContainer {
             return isAdminUser(username) ? command : unknown;
         }
         return command;
+    }
+
+    public Command retrieveExceptionCommand(ExceptionCommandName exceptionCommandName) {
+        return exceptionCommands.get(exceptionCommandName);
     }
 
     private boolean isAdminCommand(Command command) {
