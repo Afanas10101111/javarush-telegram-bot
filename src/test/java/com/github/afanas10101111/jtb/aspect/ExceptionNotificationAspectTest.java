@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
@@ -20,10 +21,12 @@ import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 
+@ActiveProfiles("test")
 @SpringBootTest(classes = ExceptionNotificationAspect.class)
 @MockBean(SendBotMessageService.class)
 class ExceptionNotificationAspectTest {
-    public static final String NEW_CHAT_ID = "8888";
+    private static final String NEW_CHAT_ID = "3";
+    private static final String ONE_MORE_NEW_CHAT_ID = "4";
 
     @Autowired
     private SendBotMessageService messageService;
@@ -31,20 +34,20 @@ class ExceptionNotificationAspectTest {
     @Autowired
     private ExceptionNotificationAspect aspect;
 
-    private Map<String, LocalDateTime> exceptionsMap;
-    private Set<String> linkToChatIdToNotify;
+    private Map<String, LocalDateTime> linkToExceptionsMap;
+    private Set<String> linkToNotifySet;
 
     @BeforeEach
     @SuppressWarnings("unchecked")
     void setup() throws NoSuchFieldException, IllegalAccessException {
         Field exceptionsMapField = aspect.getClass().getDeclaredField("exceptionsMap");
         exceptionsMapField.setAccessible(true);
-        exceptionsMap = (Map<String, LocalDateTime>) exceptionsMapField.get(aspect);
-        exceptionsMap.clear();
+        linkToExceptionsMap = (Map<String, LocalDateTime>) exceptionsMapField.get(aspect);
+        linkToExceptionsMap.clear();
 
-        Field chatIdToNotifyField = aspect.getClass().getDeclaredField("chatIdToNotify");
+        Field chatIdToNotifyField = aspect.getClass().getDeclaredField("notifySet");
         chatIdToNotifyField.setAccessible(true);
-        linkToChatIdToNotify = (Set<String>) chatIdToNotifyField.get(aspect);
+        linkToNotifySet = (Set<String>) chatIdToNotifyField.get(aspect);
     }
 
     @Test
@@ -68,18 +71,20 @@ class ExceptionNotificationAspectTest {
     @Test
     void shouldNotifyAllAdminsAboutEachSameExInDifferentOurs() {
         callNotifyAdmin(1, false);
-        exceptionsMap.put((new RuntimeException()).toString(), LocalDateTime.now().minusHours(1));
+        linkToExceptionsMap.put((new RuntimeException()).toString(), LocalDateTime.now().minusHours(1));
         callNotifyAdmin(1, false);
         checkCallAndErrorMapSize(2, 1);
     }
 
     @Test
     void shouldRemoveLazyAdminFromNotifyList() {
-        linkToChatIdToNotify.add(NEW_CHAT_ID);
+        linkToNotifySet.add(NEW_CHAT_ID);
+        linkToNotifySet.add(ONE_MORE_NEW_CHAT_ID);
         Mockito.doThrow(new BotBlockedByUserException(new RuntimeException()))
                 .when(messageService).sendMessage(eq(NEW_CHAT_ID), anyString());
         callNotifyAdmin(1, false);
-        assertThat(linkToChatIdToNotify).doesNotContain(NEW_CHAT_ID);
+        assertThat(linkToNotifySet).doesNotContain(NEW_CHAT_ID);
+        linkToNotifySet.remove(ONE_MORE_NEW_CHAT_ID);
     }
 
     private void callNotifyAdmin(int times, boolean needErrorMessage) {
@@ -91,10 +96,10 @@ class ExceptionNotificationAspectTest {
     }
 
     private void checkCallAndErrorMapSize(int callTimes, int mapSize) {
-        linkToChatIdToNotify.forEach(
+        linkToNotifySet.forEach(
                 id -> Mockito.verify(messageService, times(callTimes))
                         .sendMessage(eq(id), contains(RuntimeException.class.getSimpleName()))
         );
-        assertThat(exceptionsMap).hasSize(mapSize);
+        assertThat(linkToExceptionsMap).hasSize(mapSize);
     }
 }

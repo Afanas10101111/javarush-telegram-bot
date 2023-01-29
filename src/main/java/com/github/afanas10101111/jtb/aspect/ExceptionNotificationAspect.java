@@ -10,11 +10,13 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import static com.github.afanas10101111.jtb.command.Emoji.SHIT;
 
@@ -23,11 +25,19 @@ import static com.github.afanas10101111.jtb.command.Emoji.SHIT;
 @Aspect
 @Component
 public class ExceptionNotificationAspect {
-    private final Map<String, LocalDateTime> exceptionsMap = new HashMap<>();
     private final SendBotMessageService sendBotMessageService;
 
     @Value("${bot.admin_chat_ids}")
-    private Set<String> chatIdToNotify;
+    private Set<String> chatIdsToNotify;
+
+    private Map<String, LocalDateTime> exceptionsMap;
+    private Set<String> notifySet;
+
+    @PostConstruct
+    private void setup() {
+        exceptionsMap = new ConcurrentHashMap<>();
+        notifySet = new ConcurrentSkipListSet<>(chatIdsToNotify);
+    }
 
     @Pointcut("execution(* com.github.afanas10101111.jtb.service.impl.*.*(..))")
     private void services() {
@@ -39,8 +49,8 @@ public class ExceptionNotificationAspect {
         LocalDateTime now = LocalDateTime.now();
         if (ChronoUnit.HOURS.between(eRiseTime, now) > 0) {
             exceptionsMap.put(e.toString(), now);
-            chatIdToNotify.forEach(id -> sendErrorInfo(id, e));
-            log.warn("notifyAdmins -> Message about an exception was sent to {}", chatIdToNotify);
+            notifySet.forEach(id -> sendErrorInfo(id, e));
+            log.warn("notifyAdmins -> Message about an exception was sent to {}", notifySet);
         }
     }
 
@@ -51,7 +61,7 @@ public class ExceptionNotificationAspect {
             );
         } catch (BotBlockedByUserException ex) {
             log.warn("sendErrorInfo -> {} has blocked me and will be removed from notification list", id);
-            chatIdToNotify.remove(id);
+            notifySet.remove(id);
         }
     }
 }
