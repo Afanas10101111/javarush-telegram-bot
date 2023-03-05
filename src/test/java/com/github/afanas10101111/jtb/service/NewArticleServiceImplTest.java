@@ -1,5 +1,6 @@
 package com.github.afanas10101111.jtb.service;
 
+import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.PostClient;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
@@ -31,7 +32,10 @@ class NewArticleServiceImplTest {
     private GroupSubService groupSubService;
 
     @Mock
-    private PostClient client;
+    private PostClient postClient;
+
+    @Mock
+    private GroupClient groupClient;
 
     @InjectMocks
     private NewArticleServiceImpl newArticleService;
@@ -58,7 +62,7 @@ class NewArticleServiceImplTest {
         post.setTitle("postTitle");
         post.setDescription("postDescription");
         post.setKey("postKey");
-        Mockito.when(client.findNewPosts(anyInt(), anyInt())).thenReturn(Collections.singletonList(post));
+        Mockito.when(postClient.findNewPosts(anyInt(), anyInt())).thenReturn(Collections.singletonList(post));
     }
 
     @Test
@@ -71,6 +75,7 @@ class NewArticleServiceImplTest {
                 post.getDescription(),
                 String.format(NewArticleServiceImpl.WEB_POST_FORMAT, post.getKey())
         ));
+        assertThat(groupSub.getLastArticleId()).isEqualTo(2);
         assertThat(user.isActive()).isTrue();
     }
 
@@ -81,5 +86,13 @@ class NewArticleServiceImplTest {
                 .sendMessage(anyString(), anyString());
         newArticleService.findAndNotify();
         assertThat(user.isActive()).isFalse();
+    }
+
+    @Test
+    void shouldFixLastArticleIdIfItWasDecreased() {
+        Mockito.when(postClient.findNewPosts(anyInt(), anyInt())).thenReturn(Collections.emptyList());
+        Mockito.when(groupClient.findLastPostId(groupSub.getId())).thenReturn(0);
+        newArticleService.findAndNotify();
+        assertThat(groupSub.getLastArticleId()).isZero();
     }
 }

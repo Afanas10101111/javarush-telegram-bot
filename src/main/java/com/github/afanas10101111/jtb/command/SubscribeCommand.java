@@ -72,7 +72,7 @@ public class SubscribeCommand implements Command {
         });
         messageService.sendMessage(
                 chatId,
-                String.format(SUBSCRIBE_INFORMATION_FORMAT, groupIds.toString()),
+                String.format(SUBSCRIBE_INFORMATION_FORMAT, groupIds),
                 getNumericKeyboard(SUBSCRIBE.getName(), groupInfoIds)
         );
     }
