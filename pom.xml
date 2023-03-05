@@ -11,7 +11,7 @@
 
     <groupId>com.github.afanas10101111</groupId>
     <artifactId>javarush-telegram-bot</artifactId>
-    <version>1.5.4</version>
+    <version>1.5.5</version>
     <name>JavaRush TelegramBot</name>
     <description>Telegram bot for JavaRush according to Roman's (https://github.com/romankh3) instructions</description>
 

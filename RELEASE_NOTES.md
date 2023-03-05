@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.5.5
+* [BUG] JTB-23: Handle decreasing of lastArticleId for group on JavaRush side
+
 ## 1.5.4
 * [FEATURE] JTB-22: Notify admins about errors
 
