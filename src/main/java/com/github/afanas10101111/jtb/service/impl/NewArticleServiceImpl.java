@@ -1,6 +1,5 @@
 package com.github.afanas10101111.jtb.service.impl;
 
-import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.PostClient;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
@@ -34,7 +33,6 @@ public class NewArticleServiceImpl implements NewArticleService {
     private final SendBotMessageService sendMessageService;
     private final GroupSubService groupSubService;
     private final PostClient postClient;
-    private final GroupClient groupClient;
 
     @Override
     @Transactional
@@ -52,18 +50,7 @@ public class NewArticleServiceImpl implements NewArticleService {
         newPosts.stream()
                 .mapToInt(PostInfo::getId)
                 .max()
-                .ifPresentOrElse(groupSub::setLastArticleId, () -> checkIfJavaRushArticleCounterWasDecreased(groupSub));
-    }
-
-    private void checkIfJavaRushArticleCounterWasDecreased(GroupSub groupSub) {
-        Integer lastPostId = groupClient.findLastPostId(groupSub.getId());
-        if (lastPostId < groupSub.getLastArticleId()) {
-            log.warn(
-                    "checkIfJavaRushArticleCounterWasDecreased -> On JavaRush for groupId={} lastArticleId={}, but in DB = {}, DB value was fixed",
-                    groupSub.getId(), lastPostId, groupSub.getLastArticleId()
-            );
-            groupSub.setLastArticleId(lastPostId);
-        }
+                .ifPresent(groupSub::setLastArticleId);
     }
 
     private void notifySubscribers(GroupSub groupSub, List<PostInfo> newPosts) {

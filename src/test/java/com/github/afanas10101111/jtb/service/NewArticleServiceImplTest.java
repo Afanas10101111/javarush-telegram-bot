@@ -1,6 +1,5 @@
 package com.github.afanas10101111.jtb.service;
 
-import com.github.afanas10101111.jtb.client.GroupClient;
 import com.github.afanas10101111.jtb.client.PostClient;
 import com.github.afanas10101111.jtb.client.dto.PostInfo;
 import com.github.afanas10101111.jtb.exception.BotBlockedByUserException;
@@ -33,9 +32,6 @@ class NewArticleServiceImplTest {
 
     @Mock
     private PostClient postClient;
-
-    @Mock
-    private GroupClient groupClient;
 
     @InjectMocks
     private NewArticleServiceImpl newArticleService;
@@ -86,13 +82,5 @@ class NewArticleServiceImplTest {
                 .sendMessage(anyString(), anyString());
         newArticleService.findAndNotify();
         assertThat(user.isActive()).isFalse();
-    }
-
-    @Test
-    void shouldFixLastArticleIdIfItWasDecreased() {
-        Mockito.when(postClient.findNewPosts(anyInt(), anyInt())).thenReturn(Collections.emptyList());
-        Mockito.when(groupClient.findLastPostId(groupSub.getId())).thenReturn(0);
-        newArticleService.findAndNotify();
-        assertThat(groupSub.getLastArticleId()).isZero();
     }
 }
