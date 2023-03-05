@@ -2,7 +2,7 @@ Release Notes
 ========
 
 ## 1.5.5
-* [BUG] JTB-23: Handle decreasing of lastArticleId for group on JavaRush side
+* [BUG] JTB-23: Save max current Id for new groupSub
 
 ## 1.5.4
 * [FEATURE] JTB-22: Notify admins about errors
