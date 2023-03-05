@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
@@ -69,12 +68,10 @@ public class GroupClientImpl implements GroupClient {
     @Override
     public Integer findLastPostId(int groupSubId) {
         List<PostInfo> posts = Unirest.get(javarushApiPostPath)
-                .queryString("order", "NEW")
                 .queryString("groupKid", String.valueOf(groupSubId))
-                .queryString("limit", "1")
                 .asObject(new GenericType<List<PostInfo>>() {
                 })
                 .getBody();
-        return isEmpty(posts) ? 0 : Optional.ofNullable(posts.get(0)).map(PostInfo::getId).orElse(0);
+        return isEmpty(posts) ? 0 : posts.stream().mapToInt(PostInfo::getId).max().orElse(0);
     }
 }
