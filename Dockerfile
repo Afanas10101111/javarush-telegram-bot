@@ -11,7 +11,7 @@ ARG AUTHOR=Afanas10101111
 ARG PROJECT=javarush-telegram-bot
 ADD "https://api.github.com/repos/$AUTHOR/$PROJECT/commits?per_page=1" latest_commit
 RUN git clone https://github.com/$AUTHOR/$PROJECT.git \
-    && mvn -f ./$PROJECT/pom.xml clean package \
+    && mvn -Dmaven.test.skip -f ./$PROJECT/pom.xml clean package \
     && mv ./$PROJECT/target/*.jar ./app.jar \
     && apt-get remove -y maven \
     && apt-get remove -y git \
