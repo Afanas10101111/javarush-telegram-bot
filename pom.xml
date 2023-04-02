@@ -20,6 +20,7 @@
         <telegrambots.version>5.6.0</telegrambots.version>
         <unirest-java.version>3.13.6</unirest-java.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <banner-plugin.version>1.5.2</banner-plugin.version>
     </properties>
 
     <dependencies>
@@ -105,6 +106,29 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>ch.acanda.maven</groupId>
+                <artifactId>spring-banner-plugin</artifactId>
+                <version>${banner-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-spring-banner</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <text>${project.name}</text>
+                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                    <filename>banner.txt</filename>
+                    <includeInfo>true</includeInfo>
+                    <info>Version: ${project.version}, Powered by Spring Boot ${spring-boot.version}</info>
+                    <font>slant</font>
+                    <color>cyan</color>
                 </configuration>
             </plugin>
         </plugins>
