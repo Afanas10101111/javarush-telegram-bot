@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.5.6
+* [TECH] JTB-24: Make docker the only necessary distr to run the service
+
 ## 1.5.5
 * [BUG] JTB-23: Save max current Id for new groupSub
 
