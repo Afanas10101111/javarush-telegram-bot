@@ -5,12 +5,12 @@ services:
     build:
       context: .
     environment:
-      - BOT_NAME=${BOT_NAME}
-      - BOT_TOKEN=${BOT_TOKEN}
-      - BOT_ADMIN_NAMES=${BOT_ADMIN_NAMES}
-      - BOT_ADMIN_CHAT_IDS=${BOT_ADMIN_CHAT_IDS}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - bot.username=${BOT_NAME}
+      - bot.token=${BOT_TOKEN}
+      - bot.admin_names=${BOT_ADMIN_NAMES}
+      - bot.admin_chat_ids=${BOT_ADMIN_CHAT_IDS}
+      - spring.datasource.username=${DB_USERNAME}
+      - spring.datasource.password=${DB_PASSWORD}
     restart: always
     depends_on:
       - db
