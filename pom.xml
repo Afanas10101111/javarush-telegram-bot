@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
+        <version>2.7.11</version>
         <relativePath/>
     </parent>
 
@@ -16,9 +16,9 @@
     <description>Telegram bot for JavaRush according to Roman's (https://github.com/romankh3) instructions</description>
 
     <properties>
-        <java.version>11</java.version>
-        <telegrambots.version>5.6.0</telegrambots.version>
-        <unirest-java.version>3.13.6</unirest-java.version>
+        <java.version>17</java.version>
+        <telegrambots.version>6.5.0</telegrambots.version>
+        <unirest-java.version>4.0.0-RC2</unirest-java.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <banner-plugin.version>1.5.2</banner-plugin.version>
     </properties>
@@ -55,6 +55,11 @@
         <dependency>
             <groupId>com.konghq</groupId>
             <artifactId>unirest-java</artifactId>
+            <version>${unirest-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-object-mappers-gson</artifactId>
             <version>${unirest-java.version}</version>
         </dependency>
 

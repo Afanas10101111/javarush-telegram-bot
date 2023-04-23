@@ -45,7 +45,7 @@ class KeyboardUtilTest {
 
     private void checkRowContainsCommands(List<InlineKeyboardButton> row, CommandName... commandNames) {
         Arrays.stream(commandNames).forEach(cn -> assertTrue(row.contains(new InlineKeyboardButton(
-                cn.toString(), null, cn.getName(), null, null, null, null, null
+                cn.toString(), null, cn.getName(), null, null, null, null, null, null
         ))));
     }
 
