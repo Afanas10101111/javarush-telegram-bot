@@ -24,10 +24,13 @@ public class UnsubscribeCommand implements Command {
     public static final String UNSUBSCRIBED_FORMAT = "Отписал от группы %s";
     public static final String SUBSCRIPTION_NOT_FOUND_FORMAT = "Среди твоих подписок нет группы с ID = %s";
     public static final String ACTIVE_SUBSCRIPTION_FORMAT = "%s - %s";
-    public static final String UNSUBSCRIBE_INFORMATION_FORMAT = "Нажми на клавишу с ID группы от которой хочешь отписаться.\n" +
-            "Вот список твоих подписок:\n\n" +
-            "Имя группы - ID группы\n\n" +
-            "%s";
+    public static final String UNSUBSCRIBE_INFORMATION_FORMAT = """
+            Нажми на клавишу с ID группы от которой хочешь отписаться.
+            Вот список твоих подписок:
+            
+            Имя группы - ID группы
+            
+            %s""";
 
     private final SendBotMessageService messageService;
     private final UserService userService;
@@ -66,7 +69,7 @@ public class UnsubscribeCommand implements Command {
         });
         messageService.sendMessage(
                 chatId,
-                String.format(UNSUBSCRIBE_INFORMATION_FORMAT, groupIds.toString()),
+                String.format(UNSUBSCRIBE_INFORMATION_FORMAT, groupIds),
                 getNumericKeyboard(UNSUBSCRIBE.getName(), groupSubIds)
         );
     }

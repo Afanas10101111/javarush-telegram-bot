@@ -9,8 +9,10 @@ import static com.github.afanas10101111.jtb.command.Emoji.SAD_SMILE;
 
 @RequiredArgsConstructor
 public class UnknownCommand implements Command {
-    public static final String MESSAGE = "Ничего не понял " + SAD_SMILE.getTextValue() +
-            "\nВведи /help чтобы ознакомиться со списком команд";
+    public static final String MESSAGE = String.format("""
+                    Ничего не понял %s
+                    Введи /help чтобы ознакомиться со списком команд""",
+            SAD_SMILE.getTextValue());
 
     private final SendBotMessageService service;
 

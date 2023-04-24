@@ -14,7 +14,12 @@ import static org.apache.commons.lang3.StringUtils.LF;
 
 @RequiredArgsConstructor
 public class SubscriptionsCommand implements Command {
-    public static final String MESSAGE_FORMAT = "%s подписка на группы:\n\nИмя группы - ID группы\n\n%s";
+    public static final String MESSAGE_FORMAT = """
+            %s подписка на группы:
+                
+            Имя группы - ID группы
+                
+            %s""";
     public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
     public static final String USER_IS_ACTIVE = "Активная";
     public static final String USER_IS_INACTIVE = "Неактивная";

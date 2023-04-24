@@ -20,10 +20,12 @@ import static com.github.afanas10101111.jtb.command.Emoji.SMILE;
 @RequiredArgsConstructor
 @AdminCommand
 public class NotifyUsersCommand implements Command {
-    public static final String MESSAGE = "Чтобы отправить сообщение пользователям, его нужно сначала написать " +
-            SMILE.getTextValue() +
-            "\nНапример: " + NOTIFY.getName() + " Всем привет!\n" +
-            "Все пользователи получат сообщение \"Всем привет!\"";
+    public static final String MESSAGE = String.format("""
+                    Чтобы отправить сообщение пользователям, его нужно сначала написать %s
+                    Например: %s Всем привет!
+                    Все пользователи получат сообщение "Всем привет!\"""",
+            SMILE.getTextValue(),
+            NOTIFY.getName());
 
     private final SendBotMessageService messageService;
     private final UserService userService;

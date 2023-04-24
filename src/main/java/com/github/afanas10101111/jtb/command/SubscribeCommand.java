@@ -31,10 +31,14 @@ public class SubscribeCommand implements Command {
     public static final String SUBSCRIBED_FORMAT = "Подписал на группу %s";
     public static final String GROUP_NOT_FOUND_FORMAT = "Нет группы с ID = %s";
     public static final String GROUP_TITLE_ID_FORMAT = "%s - %s";
-    public static final String SUBSCRIBE_INFORMATION_FORMAT = "Чтобы подписаться на группу, нажми на клавишу с нужным ID группы.\n" +
-            "Вот список всех групп - выбирай " + UPSIDE_DOWN_SMILE.getTextValue() +
-            "\n\nИмя группы - ID группы\n\n" +
-            "%s";
+    public static final String SUBSCRIBE_INFORMATION = String.format("""
+                    Чтобы подписаться на группу, нажми на клавишу с нужным ID группы.
+                    Вот список всех групп - выбирай %s
+                                
+                    Имя группы - ID группы
+                                
+                    """,
+            UPSIDE_DOWN_SMILE.getTextValue());
 
     private final SendBotMessageService messageService;
     private final UserService userService;
@@ -72,7 +76,7 @@ public class SubscribeCommand implements Command {
         });
         messageService.sendMessage(
                 chatId,
-                String.format(SUBSCRIBE_INFORMATION_FORMAT, groupIds),
+                SUBSCRIBE_INFORMATION + groupIds,
                 getNumericKeyboard(SUBSCRIBE.getName(), groupInfoIds)
         );
     }

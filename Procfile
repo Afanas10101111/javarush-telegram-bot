@@ -1,1 +1,0 @@
-worker: java $JAVA_OPTS -Dbot.username=$BOT_NAME -Dbot.token=$BOT_TOKEN -Dspring.datasource.admins=$BOT_ADMINS -Dspring.datasource.username=$DB_USERNAME -Dspring.datasource.password=$DB_PASSWORD -Dspring.datasource.url=$DB_URL -jar target/*.jar

@@ -31,10 +31,9 @@ class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
 
     @Override
     String getCommandMessage() {
-        return String.format(
-                SubscribeCommand.SUBSCRIBE_INFORMATION_FORMAT,
-                String.format(SubscribeCommand.GROUP_TITLE_ID_FORMAT, GROUP_TITLE, GROUP_ID)
-        ) + LF;
+        return SubscribeCommand.SUBSCRIBE_INFORMATION
+                + String.format(SubscribeCommand.GROUP_TITLE_ID_FORMAT, GROUP_TITLE, GROUP_ID)
+                + LF;
     }
 
     @Override

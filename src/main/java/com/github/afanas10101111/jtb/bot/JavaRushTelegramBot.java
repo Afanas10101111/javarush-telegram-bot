@@ -2,7 +2,6 @@ package com.github.afanas10101111.jtb.bot;
 
 import com.github.afanas10101111.jtb.command.CommandContainer;
 import com.github.afanas10101111.jtb.exception.UserNotFoundException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,16 +17,20 @@ import static com.github.afanas10101111.jtb.command.ExceptionCommandName.UNEXPEC
 import static com.github.afanas10101111.jtb.command.ExceptionCommandName.USER_NOT_FOUND;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class JavaRushTelegramBot extends TelegramLongPollingBot {
+    private final String username;
     private final CommandContainer commandContainer;
 
-    @Value("${bot.username}")
-    private String username;
-
-    @Value("${bot.token}")
-    private String token;
+    public JavaRushTelegramBot(
+            @Value("${bot.token}") String token,
+            @Value("${bot.username}") String username,
+            CommandContainer commandContainer
+    ) {
+        super(token);
+        this.username = username;
+        this.commandContainer = commandContainer;
+    }
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -57,10 +60,5 @@ public class JavaRushTelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return username;
-    }
-
-    @Override
-    public String getBotToken() {
-        return token;
     }
 }
