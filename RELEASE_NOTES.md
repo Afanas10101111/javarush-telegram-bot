@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.5.7
+* [TECH] JTB-25: Upgrade Java and dependencies version
+
 ## 1.5.6
 * [TECH] JTB-24: Make docker the only necessary distr to run the service
 

@@ -14,7 +14,7 @@ RUN mvn -Dmaven.test.skip clean package \
     && mv ./target/*.jar $APP_PATH/app.jar \
     && apt-get remove -y maven \
     && apt-get -y autoremove \
-    && rm -R ~/.m2 \
-    && rm -R $PROJECT_PATH
+    && rm -rf ~/.m2 \
+    && rm -rf $PROJECT_PATH
 WORKDIR /$APP_PATH
 ENTRYPOINT ["java","-jar","app.jar"]
