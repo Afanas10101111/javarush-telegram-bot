@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.github.afanas10101111.jtb.command.Emoji.COFFEE_SIGN;
 
@@ -23,11 +22,14 @@ import static com.github.afanas10101111.jtb.command.Emoji.COFFEE_SIGN;
 @RequiredArgsConstructor
 @Service
 public class NewArticleServiceImpl implements NewArticleService {
-    public static final String MESSAGE_FORMAT = COFFEE_SIGN.getTextValue() +
-            " В группе <b>%s</b> вышла новая статья:\n" +
-            "<b>%s</b>\n\n" +
-            "<b>Описание:</b> %s\n\n" +
-            "<b>Ссылка:</b> %s\n";
+    public static final String MESSAGE_FORMAT = COFFEE_SIGN.getTextValue() + """
+             В группе <b>%s</b> вышла новая статья:
+            <b>%s</b>
+                        
+            <b>Описание:</b> %s
+                        
+            <b>Ссылка:</b> %s
+            """;
     public static final String WEB_POST_FORMAT = "https://javarush.ru/groups/posts/%s";
 
     private final SendBotMessageService sendMessageService;
@@ -60,7 +62,7 @@ public class NewArticleServiceImpl implements NewArticleService {
                         MESSAGE_FORMAT,
                         groupSub.getTitle(), post.getTitle(), post.getDescription(), getPostUrl(post.getKey())
                 ))
-                .collect(Collectors.toList());
+                .toList();
         groupSub.getUsers().stream()
                 .filter(User::isActive)
                 .forEach(u -> sendMessages(u, messages));

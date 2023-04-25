@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +22,7 @@ public class StatisticServiceImpl implements StatisticService {
     public StatisticTo calculateBotStatistic() {
         List<GroupStatTo> groupStatTos = groupSubService.findAll().stream()
                 .map(gs -> new GroupStatTo(gs.getId(), gs.getTitle(), getActiveUsersCount(gs.getUsers())))
-                .collect(Collectors.toList());
+                .toList();
         List<User> allInactiveUsers = userService.findAllInactiveUsers();
         List<User> allActiveUsers = userService.findAllActiveUsers();
         double groupsPerUser = getGroupsPerUser(allActiveUsers);

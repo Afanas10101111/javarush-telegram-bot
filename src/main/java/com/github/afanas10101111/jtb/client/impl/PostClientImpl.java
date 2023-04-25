@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -36,7 +35,7 @@ public class PostClientImpl implements PostClient {
         } else {
             return newPosts.stream()
                     .filter(p -> p.getId() > lastPostId)
-                    .collect(Collectors.toList());
+                    .toList();
         }
     }
 }

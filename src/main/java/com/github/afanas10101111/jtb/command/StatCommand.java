@@ -22,12 +22,14 @@ import static com.github.afanas10101111.jtb.command.Emoji.EXCLAMATION_SIGN;
 public class StatCommand implements Command {
     public static final String MESSAGE = EXCLAMATION_SIGN.getTextValue() +
             "<b>Статистика</b>" +
-            EXCLAMATION_SIGN.getTextValue() +
-            "\n- Количество активных пользователей: %s\n" +
-            "- Количество неактивных пользователей: %s\n" +
-            "- Среднее кол-во групп на 1 пользователя: %s\n\n" +
-            "<b>Количество подписчиков на группу</b>:\n" +
-            "%s";
+            EXCLAMATION_SIGN.getTextValue() + """
+            
+            - Количество активных пользователей: %s
+            - Количество неактивных пользователей: %s
+            - Среднее кол-во групп на 1 пользователя: %s
+            
+            <b>Количество подписчиков на группу</b>:
+            %s""";
     public static final String GROUP_FORMAT = "%s (id = %s) - %s";
 
     private final SendBotMessageService messageService;
@@ -38,16 +40,16 @@ public class StatCommand implements Command {
         String chatId = extractChatId(update);
         log.info("execute -> {}(Id = {}) requested statistics", extractUsername(update), chatId);
         StatisticTo statisticTo = statisticService.calculateBotStatistic();
-        String collectedGroups = statisticTo.getGroupStatTos().stream()
-                .sorted(Comparator.comparingInt(GroupStatTo::getId))
-                .sorted(Comparator.comparingLong(GroupStatTo::getActiveUserCount).reversed())
-                .map(g -> String.format(GROUP_FORMAT, g.getTitle(), g.getId(), g.getActiveUserCount()))
+        String collectedGroups = statisticTo.groupStatTos().stream()
+                .sorted(Comparator.comparingInt(GroupStatTo::id))
+                .sorted(Comparator.comparingLong(GroupStatTo::activeUserCount).reversed())
+                .map(g -> String.format(GROUP_FORMAT, g.title(), g.id(), g.activeUserCount()))
                 .collect(Collectors.joining("\n"));
         messageService.sendMessage(chatId, String.format(
                 MESSAGE,
-                statisticTo.getActiveUserCount(),
-                statisticTo.getInactiveUserCount(),
-                statisticTo.getAverageGroupCountByUser(),
+                statisticTo.activeUserCount(),
+                statisticTo.inactiveUserCount(),
+                statisticTo.averageGroupCountByUser(),
                 collectedGroups
         ));
     }

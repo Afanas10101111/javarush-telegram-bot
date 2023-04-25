@@ -17,10 +17,12 @@ import static com.github.afanas10101111.jtb.command.Emoji.EXCLAMATION_SIGN;
 @RequiredArgsConstructor
 @AdminCommand
 public class AdminHelpCommand implements Command {
-    public static final String MESSAGE = String.format("%s<b>Доступные для админа команды</b>%s" +
-                    "\n\n%s - узнать количество активных пользователей\n" +
-                    "%s - отправить сообщение всем активным пользователям\n" +
-                    "%s - получить список команд",
+    public static final String MESSAGE = String.format("""
+                    %s<b>Доступные для админа команды</b>%s
+                                        
+                    %s - узнать количество активных пользователей
+                    %s - отправить сообщение всем активным пользователям
+                    %s - получить список команд""",
             EXCLAMATION_SIGN.getTextValue(),
             EXCLAMATION_SIGN.getTextValue(),
 

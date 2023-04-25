@@ -10,9 +10,11 @@ import static com.github.afanas10101111.jtb.command.Emoji.WINKING_SMILE;
 
 @RequiredArgsConstructor
 public class GreetingCommand implements Command {
-    public static final String MESSAGE = "И тебе привет " + GREETING_SIGN.getTextValue() +
-            "\nУ меня все под контролем! Как только выйдет интересующая тебя статья, ты сразу узнаешь об этом " +
-            WINKING_SMILE.getTextValue();
+    public static final String MESSAGE = String.format("""
+                    И тебе привет %s
+                    У меня все под контролем! Как только выйдет интересующая тебя статья, ты сразу узнаешь об этом %s""",
+            GREETING_SIGN.getTextValue(),
+            WINKING_SMILE.getTextValue());
 
     private final SendBotMessageService service;
 

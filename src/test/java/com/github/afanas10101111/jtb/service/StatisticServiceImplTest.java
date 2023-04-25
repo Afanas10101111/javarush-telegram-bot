@@ -45,12 +45,12 @@ class StatisticServiceImplTest {
 
         StatisticTo statisticTo = statisticService.calculateBotStatistic();
         assertNotNull(statisticTo);
-        assertEquals(1, statisticTo.getActiveUserCount());
-        assertEquals(1, statisticTo.getInactiveUserCount());
-        assertEquals(1.0, statisticTo.getAverageGroupCountByUser());
+        assertEquals(1, statisticTo.activeUserCount());
+        assertEquals(1, statisticTo.inactiveUserCount());
+        assertEquals(1.0, statisticTo.averageGroupCountByUser());
         assertEquals(
                 List.of(new GroupStatTo(8, "Title", 0L)),
-                statisticTo.getGroupStatTos()
+                statisticTo.groupStatTos()
         );
     }
 }

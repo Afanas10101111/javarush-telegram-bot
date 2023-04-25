@@ -6,7 +6,6 @@ import com.github.afanas10101111.jtb.service.GroupSubService;
 import com.github.afanas10101111.jtb.service.SendBotMessageService;
 import com.github.afanas10101111.jtb.service.StatisticService;
 import com.github.afanas10101111.jtb.service.UserService;
-import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -60,23 +59,23 @@ public class CommandContainer {
         this.admins = Collections.unmodifiableSet(admins);
 
         unknown = new UnknownCommand(messageService);
-        commands = ImmutableMap.<String, Command>builder()
-                .put(GREETING.getName().toLowerCase(), new GreetingCommand(messageService))
-                .put(START.getName().toLowerCase(), new StartCommand(messageService, userService))
-                .put(STOP.getName().toLowerCase(), new StopCommand(messageService, userService))
-                .put(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, userService, groupSubService, client))
-                .put(SUBSCRIPTIONS.getName().toLowerCase(), new SubscriptionsCommand(messageService, userService))
-                .put(UNSUBSCRIBE.getName().toLowerCase(), new UnsubscribeCommand(messageService, userService, groupSubService))
-                .put(KEYBOARD.getName().toLowerCase(), new KeyboardCommand(messageService))
-                .put(HELP.getName().toLowerCase(), new HelpCommand(messageService))
-                .put(ADMIN_HELP.getName().toLowerCase(), new AdminHelpCommand(messageService))
-                .put(STAT.getName().toLowerCase(), new StatCommand(messageService, statisticService))
-                .put(NOTIFY.getName().toLowerCase(), new NotifyUsersCommand(messageService, userService))
-                .build();
-        exceptionCommands = ImmutableMap.<ExceptionCommandName, Command>builder()
-                .put(USER_NOT_FOUND, new UserNotFoundExceptionCommand(messageService))
-                .put(UNEXPECTED_EXCEPTION, new OtherExceptionCommand(messageService, admins))
-                .build();
+        commands = Map.ofEntries(
+                Map.entry(GREETING.getName().toLowerCase(), new GreetingCommand(messageService)),
+                Map.entry(START.getName().toLowerCase(), new StartCommand(messageService, userService)),
+                Map.entry(STOP.getName().toLowerCase(), new StopCommand(messageService, userService)),
+                Map.entry(SUBSCRIBE.getName().toLowerCase(), new SubscribeCommand(messageService, userService, groupSubService, client)),
+                Map.entry(SUBSCRIPTIONS.getName().toLowerCase(), new SubscriptionsCommand(messageService, userService)),
+                Map.entry(UNSUBSCRIBE.getName().toLowerCase(), new UnsubscribeCommand(messageService, userService, groupSubService)),
+                Map.entry(KEYBOARD.getName().toLowerCase(), new KeyboardCommand(messageService)),
+                Map.entry(HELP.getName().toLowerCase(), new HelpCommand(messageService)),
+                Map.entry(ADMIN_HELP.getName().toLowerCase(), new AdminHelpCommand(messageService)),
+                Map.entry(STAT.getName().toLowerCase(), new StatCommand(messageService, statisticService)),
+                Map.entry(NOTIFY.getName().toLowerCase(), new NotifyUsersCommand(messageService, userService))
+        );
+        exceptionCommands = Map.of(
+                USER_NOT_FOUND, new UserNotFoundExceptionCommand(messageService),
+                UNEXPECTED_EXCEPTION, new OtherExceptionCommand(messageService, admins)
+        );
     }
 
     public Command retrieveCommand(String commandIdentifier, String username) {
