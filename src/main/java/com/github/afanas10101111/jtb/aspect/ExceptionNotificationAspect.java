@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import static com.github.afanas10101111.jtb.command.Emoji.READY_SMILE;
 import static com.github.afanas10101111.jtb.command.Emoji.SHIT;
 
 @Slf4j
@@ -25,6 +26,9 @@ import static com.github.afanas10101111.jtb.command.Emoji.SHIT;
 @Aspect
 @Component
 public class ExceptionNotificationAspect {
+    private static final String STARTUP_MESSAGE = READY_SMILE.getTextValue() + " следить за ошибками сервисов готов!";
+    private static final String SHIT_ERR_FORMAT = "%s%s%s%n%s";
+
     private final SendBotMessageService sendBotMessageService;
 
     @Value("${bot.admin_chat_ids}")
@@ -37,6 +41,9 @@ public class ExceptionNotificationAspect {
     private void setup() {
         exceptionsMap = new ConcurrentHashMap<>();
         notifySet = new ConcurrentSkipListSet<>(chatIdsToNotify);
+
+        log.info("setup -> Sending message about ExceptionNotificationAspect startup to {}", notifySet);
+        notifySet.forEach(id -> sendInfo(id, STARTUP_MESSAGE));
     }
 
     @Pointcut("execution(* com.github.afanas10101111.jtb.service.impl.*.*(..))")
@@ -49,19 +56,21 @@ public class ExceptionNotificationAspect {
         LocalDateTime now = LocalDateTime.now();
         if (ChronoUnit.HOURS.between(eRiseTime, now) > 0) {
             exceptionsMap.put(e.toString(), now);
-            notifySet.forEach(id -> sendErrorInfo(id, e));
+            notifySet.forEach(id -> sendInfo(
+                    id, String.format(SHIT_ERR_FORMAT, SHIT.getTextValue(), SHIT.getTextValue(), SHIT.getTextValue(), e)
+            ));
             log.warn("notifyAdmins -> Message about an exception was sent to {}", notifySet);
         }
     }
 
-    private void sendErrorInfo(String id, Exception e) {
+    private void sendInfo(String id, String info) {
         try {
-            sendBotMessageService.sendMessage(
-                    id, String.format("%s%s%s%n%s", SHIT.getTextValue(), SHIT.getTextValue(), SHIT.getTextValue(), e)
-            );
-        } catch (BotBlockedByUserException ex) {
-            log.warn("sendErrorInfo -> {} has blocked me and will be removed from notification list", id);
+            sendBotMessageService.sendMessage(id, info);
+        } catch (BotBlockedByUserException e) {
+            log.warn("sendInfo -> {} has blocked me and will be removed from notification list", id);
             notifySet.remove(id);
+        } catch (Exception e) {
+            log.error("sendInfo -> Error during {} notification: {}", id, e.getMessage());
         }
     }
 }
