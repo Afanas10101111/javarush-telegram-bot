@@ -16,6 +16,6 @@ class GreetingCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new GreetingCommand(messageService);
+        return new GreetingCommand(messageServiceMock);
     }
 }

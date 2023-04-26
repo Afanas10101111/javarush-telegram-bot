@@ -23,16 +23,15 @@ import static org.mockito.Mockito.times;
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = ExceptionNotificationAspect.class)
-@MockBean(SendBotMessageService.class)
 class ExceptionNotificationAspectTest {
     private static final String NEW_CHAT_ID = "3";
     private static final String ONE_MORE_NEW_CHAT_ID = "4";
 
     @Autowired
-    private SendBotMessageService messageService;
-
-    @Autowired
     private ExceptionNotificationAspect aspect;
+
+    @MockBean
+    private SendBotMessageService messageServiceMock;
 
     private Map<String, LocalDateTime> linkToExceptionsMap;
     private Set<String> linkToNotifySet;
@@ -81,10 +80,18 @@ class ExceptionNotificationAspectTest {
         linkToNotifySet.add(NEW_CHAT_ID);
         linkToNotifySet.add(ONE_MORE_NEW_CHAT_ID);
         Mockito.doThrow(new BotBlockedByUserException(new RuntimeException()))
-                .when(messageService).sendMessage(eq(NEW_CHAT_ID), anyString());
+                .when(messageServiceMock).sendMessage(eq(NEW_CHAT_ID), anyString());
         callNotifyAdmin(1, false);
         assertThat(linkToNotifySet).doesNotContain(NEW_CHAT_ID);
         linkToNotifySet.remove(ONE_MORE_NEW_CHAT_ID);
+    }
+
+    @Test
+    void shouldNotRemoveAdminFromNotifyListIfUnexpectedErrorOccurred() {
+        assertThat(linkToNotifySet).hasSize(2);
+        Mockito.doThrow(new RuntimeException()).when(messageServiceMock).sendMessage(anyString(), anyString());
+        callNotifyAdmin(1, false);
+        assertThat(linkToNotifySet).hasSize(2);
     }
 
     private void callNotifyAdmin(int times, boolean needErrorMessage) {
@@ -97,7 +104,7 @@ class ExceptionNotificationAspectTest {
 
     private void checkCallAndErrorMapSize(int callTimes, int mapSize) {
         linkToNotifySet.forEach(
-                id -> Mockito.verify(messageService, times(callTimes))
+                id -> Mockito.verify(messageServiceMock, times(callTimes))
                         .sendMessage(eq(id), contains(RuntimeException.class.getSimpleName()))
         );
         assertThat(linkToExceptionsMap).hasSize(mapSize);

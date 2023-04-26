@@ -22,10 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class StatisticServiceImplTest {
 
     @Mock
-    private GroupSubService groupSubService;
+    private GroupSubService groupSubServiceMock;
 
     @Mock
-    private UserService userService;
+    private UserService userServiceMock;
 
     @InjectMocks
     private StatisticServiceImpl statisticService;
@@ -39,9 +39,9 @@ class StatisticServiceImplTest {
         groupSub.setTitle("Title");
         groupSub.setUsers(Set.of(user));
 
-        Mockito.when(groupSubService.findAll()).thenReturn(List.of(groupSub));
-        Mockito.when(userService.findAllActiveUsers()).thenReturn(List.of(user));
-        Mockito.when(userService.findAllInactiveUsers()).thenReturn(List.of(new User()));
+        Mockito.when(groupSubServiceMock.findAll()).thenReturn(List.of(groupSub));
+        Mockito.when(userServiceMock.findAllActiveUsers()).thenReturn(List.of(user));
+        Mockito.when(userServiceMock.findAllInactiveUsers()).thenReturn(List.of(new User()));
 
         StatisticTo statisticTo = statisticService.calculateBotStatistic();
         assertNotNull(statisticTo);

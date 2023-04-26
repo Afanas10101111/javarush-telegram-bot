@@ -15,6 +15,6 @@ class UnknownCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new UnknownCommand(messageService);
+        return new UnknownCommand(messageServiceMock);
     }
 }

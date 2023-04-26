@@ -1,6 +1,12 @@
 Release Notes
 ========
 
+# 1.6.0
+Release version:
+* Only active users are counted in group statistics
+* Admins receive error notifications
+* Admins receive a notification about the start of the bot
+
 ## 1.5.7
 * [TECH] JTB-25: Upgrade Java and dependencies version
 

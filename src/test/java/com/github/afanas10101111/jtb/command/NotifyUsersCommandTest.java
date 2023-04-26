@@ -25,14 +25,14 @@ class NotifyUsersCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new NotifyUsersCommand(messageService, userService);
+        return new NotifyUsersCommand(messageServiceMock, userServiceMock);
     }
 
     @Test
     void shouldSendMessageToAllActiveUsers() {
         User user = new User();
         user.setChatId(CHAT_ID.toString());
-        Mockito.when(userService.findAllActiveUsers()).thenReturn(List.of(user));
+        Mockito.when(userServiceMock.findAllActiveUsers()).thenReturn(List.of(user));
 
         Update update = getMockedUpdate();
         update.getMessage().setText(getCommandName() + SPACE + MESSAGE_FOR_USERS);

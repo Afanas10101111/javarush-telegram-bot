@@ -24,7 +24,7 @@ class SendBotMessageServiceImplTest {
     private static final String MESSAGE = "test_message";
 
     @Mock
-    private JavaRushTelegramBot bot;
+    private JavaRushTelegramBot botMock;
 
     @InjectMocks
     private SendBotMessageServiceImpl service;
@@ -32,7 +32,7 @@ class SendBotMessageServiceImplTest {
     @Test
     void shouldProperlySendMessage() throws TelegramApiException {
         service.sendMessage(CHAT_ID, MESSAGE);
-        Mockito.verify(bot).execute(getSengMessage());
+        Mockito.verify(botMock).execute(getSengMessage());
     }
 
     @Test
@@ -43,7 +43,7 @@ class SendBotMessageServiceImplTest {
         );
         TelegramApiRequestException exception = new TelegramApiRequestException("", apiResponse);
         
-        Mockito.when(bot.execute(getSengMessage())).thenThrow(exception);
+        Mockito.when(botMock.execute(getSengMessage())).thenThrow(exception);
 
         assertThatExceptionOfType(BotBlockedByUserException.class)
                 .isThrownBy(() -> service.sendMessage(CHAT_ID, MESSAGE));

@@ -24,7 +24,7 @@ class StopCommandTest extends AbstractCommandTest {
         String chatId = CHAT_ID.toString();
         User user = new User();
         user.setChatId(chatId);
-        Mockito.when(userService.findByChatId(chatId)).thenReturn(Optional.of(user));
-        return new StopCommand(messageService, userService);
+        Mockito.when(userServiceMock.findByChatId(chatId)).thenReturn(Optional.of(user));
+        return new StopCommand(messageServiceMock, userServiceMock);
     }
 }

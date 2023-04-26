@@ -41,14 +41,14 @@ class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
         String chatId = CHAT_ID.toString();
         User user = new User();
         user.setChatId(chatId);
-        Mockito.when(userService.findByChatId(chatId)).thenReturn(Optional.of(user));
+        Mockito.when(userServiceMock.findByChatId(chatId)).thenReturn(Optional.of(user));
 
         GroupInfo groupInfo = new GroupInfo();
         groupInfo.setTitle(GROUP_TITLE);
         groupInfo.setId(GROUP_ID);
-        Mockito.when(client.getGroupList(any())).thenReturn(List.of(groupInfo));
+        Mockito.when(clientMock.getGroupList(any())).thenReturn(List.of(groupInfo));
 
-        return new SubscribeCommand(messageService, userService, groupSubService, client);
+        return new SubscribeCommand(messageServiceMock, userServiceMock, groupSubServiceMock, clientMock);
     }
 
     @Override
@@ -72,7 +72,7 @@ class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
 
         GroupSub savedGroupSub = new GroupSub();
         savedGroupSub.setTitle(groupId);
-        Mockito.when(groupSubService.save(any(User.class), any())).thenReturn(savedGroupSub);
+        Mockito.when(groupSubServiceMock.save(any(User.class), any())).thenReturn(savedGroupSub);
 
         performCheck(groupId, SubscribeCommand.SUBSCRIBED_FORMAT, Integer.parseInt(groupId));
     }
@@ -83,7 +83,7 @@ class SubscribeCommandTest extends AbstractCommandWithKeyboardTest {
 
         GroupDiscussionInfo groupById = new GroupDiscussionInfo();
         groupById.setId(groupIdFromClient);
-        Mockito.when(client.getGroupById(anyInt())).thenReturn(groupById);
+        Mockito.when(clientMock.getGroupById(anyInt())).thenReturn(groupById);
 
         getCommand().execute(update);
         verifyMessageServiceCall(CHAT_ID.toString(), String.format(messageFormat, groupId));

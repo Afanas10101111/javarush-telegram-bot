@@ -19,7 +19,7 @@ class KeyboardCommandTest extends AbstractCommandWithKeyboardTest {
 
     @Override
     Command getCommand() {
-        return new KeyboardCommand(messageService);
+        return new KeyboardCommand(messageServiceMock);
     }
 
     @Override

@@ -14,6 +14,7 @@ public enum Emoji {
     UPSIDE_DOWN_SMILE("\uD83D\uDE43"),
     WINKING_SMILE("\uD83D\uDE09"),
     SUNGLASSES_SMILE("\uD83D\uDE0E"),
+    READY_SMILE("\uD83E\uDEE1"),
     TERRIFY_SMILE("\uD83D\uDE31"),
     SAD_SMILE("\uD83D\uDE14"),
     SHIT("\uD83D\uDCA9");
