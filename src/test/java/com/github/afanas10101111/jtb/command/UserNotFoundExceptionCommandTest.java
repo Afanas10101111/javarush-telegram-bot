@@ -15,6 +15,6 @@ class UserNotFoundExceptionCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new UserNotFoundExceptionCommand(messageService);
+        return new UserNotFoundExceptionCommand(messageServiceMock);
     }
 }

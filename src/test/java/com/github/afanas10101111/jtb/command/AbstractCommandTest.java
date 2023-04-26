@@ -17,11 +17,11 @@ abstract class AbstractCommandTest {
     protected static final String TELEGRAM_USER_NAME = "DarthVader";
     protected static final Long CHAT_ID = 123456789L;
 
-    protected SendBotMessageService messageService = Mockito.mock(SendBotMessageService.class);
-    protected UserService userService = Mockito.mock(UserService.class);
-    protected GroupSubService groupSubService = Mockito.mock(GroupSubService.class);
-    protected StatisticService statisticService = Mockito.mock(StatisticService.class);
-    protected GroupClient client = Mockito.mock(GroupClient.class);
+    protected SendBotMessageService messageServiceMock = Mockito.mock(SendBotMessageService.class);
+    protected UserService userServiceMock = Mockito.mock(UserService.class);
+    protected GroupSubService groupSubServiceMock = Mockito.mock(GroupSubService.class);
+    protected StatisticService statisticServiceMock = Mockito.mock(StatisticService.class);
+    protected GroupClient clientMock = Mockito.mock(GroupClient.class);
 
     abstract String getCommandName();
 
@@ -42,11 +42,11 @@ abstract class AbstractCommandTest {
     }
 
     protected void verifyMessageServiceCall(String chatId, String message) {
-        Mockito.verify(messageService).sendMessage(chatId, message);
+        Mockito.verify(messageServiceMock).sendMessage(chatId, message);
     }
 
     protected void verifyMessageServiceCallWithKeyboard(String chatId, String message, InlineKeyboardMarkup keyboardMarkup) {
-        Mockito.verify(messageService).sendMessage(chatId, message, keyboardMarkup);
+        Mockito.verify(messageServiceMock).sendMessage(chatId, message, keyboardMarkup);
     }
 
     protected Update getMockedUpdate() {

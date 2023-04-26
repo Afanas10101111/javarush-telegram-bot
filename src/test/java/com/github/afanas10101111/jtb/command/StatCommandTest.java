@@ -29,12 +29,12 @@ class StatCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        Mockito.when(statisticService.calculateBotStatistic()).thenReturn(new StatisticTo(
+        Mockito.when(statisticServiceMock.calculateBotStatistic()).thenReturn(new StatisticTo(
                 1,
                 2,
                 List.of(new GroupStatTo(3, TITLE, 4L)),
                 1.0
         ));
-        return new StatCommand(messageService, statisticService);
+        return new StatCommand(messageServiceMock, statisticServiceMock);
     }
 }

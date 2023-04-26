@@ -43,9 +43,9 @@ class UnsubscribeCommandTest extends AbstractCommandWithKeyboardTest {
         groupSub.setId(GROUP_ID);
         User user = new User();
         user.setGroupSubs(Set.of(groupSub));
-        Mockito.when(userService.findByChatId(anyString())).thenReturn(Optional.of(user));
+        Mockito.when(userServiceMock.findByChatId(anyString())).thenReturn(Optional.of(user));
 
-        return new UnsubscribeCommand(messageService, userService, groupSubService);
+        return new UnsubscribeCommand(messageServiceMock, userServiceMock, groupSubServiceMock);
     }
 
     @Override
@@ -70,7 +70,7 @@ class UnsubscribeCommandTest extends AbstractCommandWithKeyboardTest {
         GroupSub groupSub = new GroupSub();
         groupSub.addUser(new User());
         groupSub.setTitle(groupId);
-        Mockito.when(groupSubService.findById(anyInt())).thenReturn(Optional.of(groupSub));
+        Mockito.when(groupSubServiceMock.findById(anyInt())).thenReturn(Optional.of(groupSub));
 
         performCheck(groupId, UnsubscribeCommand.UNSUBSCRIBED_FORMAT);
     }

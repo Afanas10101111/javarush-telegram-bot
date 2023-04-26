@@ -22,13 +22,13 @@ class JavaRushTelegramBotTest {
     private static final String NAME = "Spock";
 
     @Mock
-    private CommandContainer commandContainer;
+    private CommandContainer commandContainerMock;
 
     @Mock
-    private Command command;
+    private Command commandMock;
 
     @Mock
-    private Update update;
+    private Update updateMock;
 
     @InjectMocks
     private JavaRushTelegramBot bot;
@@ -41,29 +41,29 @@ class JavaRushTelegramBotTest {
         message.setText(TEXT);
         message.setFrom(user);
 
-        Mockito.when(update.getMessage()).thenReturn(message);
-        Mockito.when(update.hasMessage()).thenReturn(true);
-        Mockito.when(commandContainer.retrieveCommand(TEXT, NAME)).thenReturn(command);
+        Mockito.when(updateMock.getMessage()).thenReturn(message);
+        Mockito.when(updateMock.hasMessage()).thenReturn(true);
+        Mockito.when(commandContainerMock.retrieveCommand(TEXT, NAME)).thenReturn(commandMock);
 
-        bot.onUpdateReceived(update);
-        Mockito.verify(command).execute(update);
+        bot.onUpdateReceived(updateMock);
+        Mockito.verify(commandMock).execute(updateMock);
     }
 
     @Test
     void userNotFoundExceptionShouldExecuteCorrectCommand() {
-        Mockito.when(update.hasMessage()).thenThrow(new UserNotFoundException());
-        Mockito.when(commandContainer.retrieveExceptionCommand(USER_NOT_FOUND)).thenReturn(command);
+        Mockito.when(updateMock.hasMessage()).thenThrow(new UserNotFoundException());
+        Mockito.when(commandContainerMock.retrieveExceptionCommand(USER_NOT_FOUND)).thenReturn(commandMock);
 
-        bot.onUpdateReceived(update);
-        Mockito.verify(command).execute(update);
+        bot.onUpdateReceived(updateMock);
+        Mockito.verify(commandMock).execute(updateMock);
     }
 
     @Test
     void anyNotDefinedExceptionShouldExecuteCorrectCommand() {
-        Mockito.when(update.hasMessage()).thenThrow(new NullPointerException());
-        Mockito.when(commandContainer.retrieveExceptionCommand(UNEXPECTED_EXCEPTION)).thenReturn(command);
+        Mockito.when(updateMock.hasMessage()).thenThrow(new NullPointerException());
+        Mockito.when(commandContainerMock.retrieveExceptionCommand(UNEXPECTED_EXCEPTION)).thenReturn(commandMock);
 
-        bot.onUpdateReceived(update);
-        Mockito.verify(command).execute(update);
+        bot.onUpdateReceived(updateMock);
+        Mockito.verify(commandMock).execute(updateMock);
     }
 }

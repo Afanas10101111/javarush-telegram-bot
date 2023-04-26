@@ -16,6 +16,6 @@ class AdminHelpCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new AdminHelpCommand(messageService);
+        return new AdminHelpCommand(messageServiceMock);
     }
 }

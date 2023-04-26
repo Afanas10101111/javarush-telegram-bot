@@ -35,8 +35,8 @@ class SubscriptionsCommandTest extends AbstractCommandTest {
         groupSubs.add(createGroupSub(IDS[1], TITLES[1]));
         User user = new User();
         user.setGroupSubs(groupSubs);
-        Mockito.when(userService.findByChatId(CHAT_ID.toString())).thenReturn(Optional.of(user));
-        return new SubscriptionsCommand(messageService, userService);
+        Mockito.when(userServiceMock.findByChatId(CHAT_ID.toString())).thenReturn(Optional.of(user));
+        return new SubscriptionsCommand(messageServiceMock, userServiceMock);
     }
 
     private GroupSub createGroupSub(Integer id, String title) {

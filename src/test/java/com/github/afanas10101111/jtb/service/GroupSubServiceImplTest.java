@@ -89,7 +89,7 @@ class GroupSubServiceImplTest {
         assertEquals(groupTitle, groupSub.getTitle());
         assertEquals(subscribersCount, groupSub.getUsers().size());
         if (subscribersCount > 0) {
-            assertTrue(groupSub.getUsers().contains(userRepository.getById(chatId)));
+            assertTrue(groupSub.getUsers().contains(userRepository.findById(chatId).orElseThrow()));
         }
     }
 }

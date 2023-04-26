@@ -18,6 +18,6 @@ class OtherExceptionCommandTest extends AbstractCommandTest {
 
     @Override
     Command getCommand() {
-        return new OtherExceptionCommand(messageService, Set.of(ADMIN_NAME));
+        return new OtherExceptionCommand(messageServiceMock, Set.of(ADMIN_NAME));
     }
 }

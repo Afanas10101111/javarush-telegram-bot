@@ -25,13 +25,13 @@ import static org.mockito.ArgumentMatchers.anyString;
 class NewArticleServiceImplTest {
 
     @Mock
-    private SendBotMessageService messageService;
+    private SendBotMessageService messageServiceMock;
 
     @Mock
-    private GroupSubService groupSubService;
+    private GroupSubService groupSubServiceMock;
 
     @Mock
-    private PostClient postClient;
+    private PostClient postClientMock;
 
     @InjectMocks
     private NewArticleServiceImpl newArticleService;
@@ -51,20 +51,20 @@ class NewArticleServiceImplTest {
         groupSub.setTitle("title");
         groupSub.setLastArticleId(1);
         groupSub.addUser(user);
-        Mockito.when(groupSubService.findAll()).thenReturn(Collections.singletonList(groupSub));
+        Mockito.when(groupSubServiceMock.findAll()).thenReturn(Collections.singletonList(groupSub));
 
         post = new PostInfo();
         post.setId(2);
         post.setTitle("postTitle");
         post.setDescription("postDescription");
         post.setKey("postKey");
-        Mockito.when(postClient.findNewPosts(anyInt(), anyInt())).thenReturn(Collections.singletonList(post));
+        Mockito.when(postClientMock.findNewPosts(anyInt(), anyInt())).thenReturn(Collections.singletonList(post));
     }
 
     @Test
     void shouldFindAndNotify() {
         newArticleService.findAndNotify();
-        Mockito.verify(messageService).sendMessage(user.getChatId(), String.format(
+        Mockito.verify(messageServiceMock).sendMessage(user.getChatId(), String.format(
                 NewArticleServiceImpl.MESSAGE_FORMAT,
                 groupSub.getTitle(),
                 post.getTitle(),
@@ -78,7 +78,7 @@ class NewArticleServiceImplTest {
     @Test
     void shouldMarkAsInactiveUserWhoBlockedTheBot() {
         Mockito.doThrow(new BotBlockedByUserException(new TelegramApiException()))
-                .when(messageService)
+                .when(messageServiceMock)
                 .sendMessage(anyString(), anyString());
         newArticleService.findAndNotify();
         assertThat(user.isActive()).isFalse();
