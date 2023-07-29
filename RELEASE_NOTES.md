@@ -1,6 +1,9 @@
 Release Notes
 ========
 
+## 1.6.1
+* [BUG] JTB-27: Force PostClientImpl to return modifiable list
+
 # 1.6.0
 Release version:
 * Only active users are counted in group statistics
